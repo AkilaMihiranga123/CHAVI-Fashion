@@ -43,7 +43,8 @@ router.post('/register', (req, res) => {
                     email: req.body.email,
                     gender: req.body.gender,
                     contact_Number: req.body.contact_Number,
-                    password: req.body.password
+                    password: req.body.password,
+                    userRole: 'user'
                 });
 
                 bcrypt.genSalt(10, (err, salt) =>
@@ -115,7 +116,8 @@ router.post('/login', (req, res) => {
                                                 user_id: user._id,
                                                 first_Name: user.first_Name,
                                                 last_Name: user.last_Name,
-                                                email: user.email
+                                                email: user.email,
+                                                userRole: user.userRole
                                             },
                                             token: token
                                         }
@@ -150,7 +152,7 @@ router.post('/update/:id', authenticate, (req, res) => {
     User.findByIdAndUpdate(req.params.id)
         .then(user => {
             user.first_Name = req.body.first_Name,
-            user.las_Name = req.body.last_Name,
+            user.last_Name = req.body.last_Name,
             user.email = req.body.email,
             user.gender = req.body.gender,
             user.contact_Number = req.body.contact_Number,
@@ -181,7 +183,11 @@ router.post('/update/:id', authenticate, (req, res) => {
                         });
                 }));
         })
-        .catch(() => res.status(400).json({ status: "Error", data:{} }));
+        .catch(error => {
+            res.status(400).json({
+                error: error
+            });
+        })
 });
 
 

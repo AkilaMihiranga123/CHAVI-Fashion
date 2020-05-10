@@ -27,6 +27,10 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    userRole: {
+        type: String,
+        default: 'user'
     }
 },{
     timestamps: true,
