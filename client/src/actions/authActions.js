@@ -81,3 +81,18 @@ export const getToken = () => {
 
     }
 }
+
+export const logout = () => {
+    return dispatch => {
+        const authData = window.localStorage.getItem('auth');
+        if(authData){
+            window.localStorage.clear();
+            dispatch({
+                type: LOGOUT_USER,
+                payload: ''
+            });
+            return Promise.resolve(true);
+        }
+        return Promise.resolve(false);
+    }
+}

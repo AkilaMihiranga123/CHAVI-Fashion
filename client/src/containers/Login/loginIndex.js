@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import './style.css';
 
 import * as authActions from '../../actions/authActions';
 import { connect } from 'react-redux';
