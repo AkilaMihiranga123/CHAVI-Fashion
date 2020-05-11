@@ -3,7 +3,7 @@ import { base_url } from "../constants/index";
 export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 
-export const register = (user) => {
+export const signup = (user) => {
     return async dispatch => {
         try{
             const response = await fetch(`${base_url}/user/register`, {
