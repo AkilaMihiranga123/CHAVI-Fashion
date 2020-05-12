@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import * as authActions from '../../actions/authActions';
 import { connect } from 'react-redux';
@@ -31,9 +31,11 @@ class Login extends Component {
                 console.log(response);
                 if(response.hasOwnProperty('token') && response.user.userRole === 'user'){
                     window.localStorage.setItem('auth', JSON.stringify(response))
-                    this.setState({
-                        redirectToReferrer: true
-                    });
+                    this.props.history.push('/');
+
+                } else if(response.hasOwnProperty('token') && response.user.userRole === 'admin'){
+                    window.localStorage.setItem('auth', JSON.stringify(response))
+                    this.props.history.push('/admin-dashboard');
                 }
             })
             .catch(error => {
@@ -41,28 +43,7 @@ class Login extends Component {
             })
     }
 
-    componentDidMount() {
-        if(!this.props.auth.isAuthenticated){
-            this.props.getToken()
-                .then(result => {
-                    if(result){
-                        this.setState({
-                            redirectToReferrer: true
-                        });
-                    }
-                })
-                .catch(er => {
-                    console.log(er);
-                });
-        }
-    }
-
-
     render() {
-
-        if(this.state.redirectToReferrer){
-            return <Redirect to="/" />
-        }
         return (
             <div className="row mt-5">
                 <div className="col-md-4 m-auto">
