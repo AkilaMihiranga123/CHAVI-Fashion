@@ -1,26 +1,13 @@
 import React, { Component } from 'react';
 import './style.css';
-import Products from '../../components/ShopStore/Products/Products';
-import { Route, Switch } from 'react-router-dom';
-import Header from '../../components/Header/Header';
+import ShopStore from '../../components/ShopStore/ShopStore';
 
-
-class ShopStore extends Component{
-
-    render() {
-
+class Shop extends Component{
+    render(){
         return (
-            <React.Fragment>
-                <Header/>
-                <Switch>
-                    <Route path="/" exact component={Products} />
-                </Switch>
-            </React.Fragment>
-
+            <ShopStore />
         );
     }
 }
 
-
-
-export default ShopStore;
+export default Shop;
