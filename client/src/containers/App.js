@@ -10,6 +10,9 @@ import Signup from './SignUp/SignUpIndex';
 import Admin from './AdminDashboard';
 import UserList from './AdminDashboard/UserManagement/UsersList';
 import EditUser from './AdminDashboard/UserManagement/EditUser';
+import AdminList from './AdminDashboard/AdminManagement/AdminsList';
+import EditAdmin from './AdminDashboard/AdminManagement/EditAdmin';
+import AddAdmin from './AdminDashboard/AdminManagement/AddAdmin';
 
 const rootReducers = combineReducers({
     auth: authReducers
@@ -27,6 +30,9 @@ function App() {
                         <Route path="/signup" component={Signup} />
                         <Route path="/users-list" component={UserList} />
                         <Route path="/edit-user/:id" component={EditUser} />
+                        <Route path="/admins-list" component={AdminList} />
+                        <Route path="/edit-admin/:id" component={EditAdmin} />
+                        <Route path="/add-admin" component={AddAdmin} />
 
                         <Route path="/"  component={Shop} />
 
