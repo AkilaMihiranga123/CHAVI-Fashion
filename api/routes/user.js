@@ -148,46 +148,66 @@ router.post('/login', (req, res) => {
 
 });
 
-router.post('/update/:id', authenticate, (req, res) => {
+router.post('/update/:id', (req, res) => {
     User.findByIdAndUpdate(req.params.id)
         .then(user => {
             user.first_Name = req.body.first_Name,
-            user.last_Name = req.body.last_Name,
-            user.email = req.body.email,
-            user.gender = req.body.gender,
-            user.contact_Number = req.body.contact_Number,
-            user.password = req.body.password
+                user.last_Name = req.body.last_Name,
+                user.email = req.body.email,
+                user.gender = req.body.gender,
+                user.contact_Number = req.body.contact_Number
 
-            bcrypt.genSalt(10, (err, salt) =>
-                bcrypt.hash(user.password, salt, (err, hash) => {
-                    if(err){
-                        return res.status(400).json({
-                            status: 'error',
-                            error: 'Error occurred'
-                        });
-                    }
-                    //Set updated password to hashed
-                    user.password = hash;
-                    //updated user
-                    user.save()
-                        .then(user => {
-                            res.status(200).json({
-                                message: 'Account Updated Successfully',
-                                data: user
-                            });
-                        })
-                        .catch(error => {
-                            res.status(400).json({
-                                error: error
-                            });
-                        });
-                }));
+            user.save()
+                .then(user => {
+                    res.status(200).json({
+                        message: 'Account Updated Successfully',
+                        data: user
+                    });
+                })
+                .catch(error => {
+                    res.status(400).json({
+                        error: error
+                    });
+                });
         })
         .catch(error => {
             res.status(400).json({
                 error: error
             });
         })
+});
+
+//remove User
+router.delete('/:id',(req, res) => {
+    User.findByIdAndDelete(req.params.id)
+        .then(users => {
+            res.status(200).json({
+                status: 'User deleted',
+                data: users
+            });
+        })
+        .catch(error => {
+            res.status(400).json({
+                status: 'error',
+                error: error
+            });
+        });
+});
+
+//find user by id
+router.get('/:id',(req, res) => {
+    User.findById(req.params.id)
+        .then(users => {
+            res.status(200).json({
+                data: users
+            });
+        })
+        .catch(error => {
+            res.status(400).json({
+                status: 'error',
+                error: error
+            });
+        });
 });
 
 

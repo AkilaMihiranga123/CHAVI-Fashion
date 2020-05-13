@@ -8,6 +8,8 @@ import Shop from './Shop/index';
 import Login from './Login/loginIndex';
 import Signup from './SignUp/SignUpIndex';
 import Admin from './AdminDashboard';
+import UserList from './AdminDashboard/UserManagement/UsersList';
+import EditUser from './AdminDashboard/UserManagement/EditUser';
 
 const rootReducers = combineReducers({
     auth: authReducers
@@ -23,9 +25,13 @@ function App() {
                     <Switch>
                         <Route path="/login" component={Login} />
                         <Route path="/signup" component={Signup} />
-                        <Route path="/products"  component={Shop} />
+                        <Route path="/users-list" component={UserList} />
+                        <Route path="/edit-user/:id" component={EditUser} />
+
                         <Route path="/"  component={Shop} />
+
                         <Route path="/admin-dashboard"  component={Admin} />
+
                     </Switch>
                 </div>
             </Router>
