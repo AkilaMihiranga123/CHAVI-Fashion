@@ -14,6 +14,10 @@ import AdminList from './AdminDashboard/AdminManagement/AdminsList';
 import EditAdmin from './AdminDashboard/AdminManagement/EditAdmin';
 import AddAdmin from './AdminDashboard/AdminManagement/AddAdmin';
 import StoreManager from './StoreManagerDashboard';
+import StoreManagerList from './AdminDashboard/ManagerManagement/StoreManagersList';
+import AddStoreManager from './AdminDashboard/ManagerManagement/AddStoreManager';
+import EditStoreManager from './AdminDashboard/ManagerManagement/EditStoreManager';
+
 
 const rootReducers = combineReducers({
     auth: authReducers
@@ -34,6 +38,9 @@ function App() {
                         <Route path="/admins-list" component={AdminList} />
                         <Route path="/edit-admin/:id" component={EditAdmin} />
                         <Route path="/add-admin" component={AddAdmin} />
+                        <Route path="/store-managers-list" component={StoreManagerList} />
+                        <Route path="/add-store-manager" component={AddStoreManager} />
+                        <Route path="/edit-store-manager/:id" component={EditStoreManager} />
 
                         <Route path="/"  component={Shop} />
 
