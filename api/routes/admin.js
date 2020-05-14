@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Admin = require('../models/User');
-const authenticate  = require('../middleware/authenticate');
 const bcrypt = require('bcrypt');
 
 //get all admin
@@ -77,41 +76,27 @@ router.post('/add-admin', (req, res) => {
 });
 
 //create admin details update route
-router.post('/update/:id', authenticate, (req, res) => {
+router.post('/update/:id', (req, res) => {
     Admin.findByIdAndUpdate(req.params.id)
         .then(admin => {
                 admin.first_Name = req.body.first_Name,
                 admin.last_Name = req.body.last_Name,
                 admin.email = req.body.email,
                 admin.gender = req.body.gender,
-                admin.contact_Number = req.body.contact_Number,
-                admin.password = req.body.password,
-                admin.userRole = 'admin'
+                admin.contact_Number = req.body.contact_Number
 
-            bcrypt.genSalt(10, (err, salt) =>
-                bcrypt.hash(admin.password, salt, (err, hash) => {
-                    if(err){
-                        return res.status(400).json({
-                            status: 'error',
-                            error: 'Error occurred'
+                admin.save()
+                    .then(admin => {
+                        res.status(200).json({
+                            message: 'Account Updated Successfully',
+                            data: admin
                         });
-                    }
-                    //Set updated password to hashed
-                    admin.password = hash;
-                    //updated admin
-                    admin.save()
-                        .then(user => {
-                            res.status(200).json({
-                                message: 'Account Updated Successfully',
-                                data: user
-                            });
-                        })
-                        .catch(error => {
-                            res.status(400).json({
-                                error: error
-                            });
+                    })
+                    .catch(error => {
+                        res.status(400).json({
+                            error: error
                         });
-                }));
+                    });
         })
         .catch(error => {
             res.status(400).json({
@@ -121,7 +106,7 @@ router.post('/update/:id', authenticate, (req, res) => {
 });
 
 //admin find by id
-router.get('/:id',authenticate,(req, res) => {
+router.get('/:id',(req, res) => {
     Admin.findById(req.params.id)
         .then(admin => {
             res.status(200).json({
@@ -137,7 +122,7 @@ router.get('/:id',authenticate,(req, res) => {
 });
 
 //remove Admin
-router.delete('/:id', authenticate, (req, res) => {
+router.delete('/:id',(req, res) => {
     Admin.findByIdAndDelete(req.params.id)
         .then(admin => {
             res.status(200).json({
