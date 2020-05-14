@@ -13,6 +13,7 @@ import EditUser from './AdminDashboard/UserManagement/EditUser';
 import AdminList from './AdminDashboard/AdminManagement/AdminsList';
 import EditAdmin from './AdminDashboard/AdminManagement/EditAdmin';
 import AddAdmin from './AdminDashboard/AdminManagement/AddAdmin';
+import StoreManager from './StoreManagerDashboard';
 
 const rootReducers = combineReducers({
     auth: authReducers
@@ -37,6 +38,7 @@ function App() {
                         <Route path="/"  component={Shop} />
 
                         <Route path="/admin-dashboard"  component={Admin} />
+                        <Route path="/store-manager-dashboard"  component={StoreManager} />
 
                     </Switch>
                 </div>

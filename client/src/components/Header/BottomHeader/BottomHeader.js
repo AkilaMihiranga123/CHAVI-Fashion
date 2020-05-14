@@ -31,6 +31,13 @@ class BottomHeader extends Component{
                 <li className="MenuItem"><Link to="/admins-list">Admins</Link></li>
             </ul>;
         }
+        if(this.props.auth.isAuthenticated && this.props.auth.user.userRole === 'storeManager'){
+            guestAccount = <ul className="Menu">
+                <li className="MenuItem"><Link to="/"><i className="fas fa-home"></i></Link></li>
+                <li className="MenuItem"><Link to="/products/all" className="MenuItemElement">Shop&nbsp;<i className="fas fa-caret-down"></i></Link></li>
+                <li className="MenuItem"><Link to="/categories">Products</Link></li>
+            </ul>;
+        }
 
         return (
             <div className="BottomHeader">

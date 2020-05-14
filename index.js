@@ -13,10 +13,12 @@ app.use(express.json());
 //import routes
 const userRoutes = require('./api/routes/user');
 const adminRoutes = require('./api/routes/admin');
+const storeManagerRoutes = require('./api/routes/storeManager');
 
 //use imported routes
 app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
+app.use('/storeManager', storeManagerRoutes);
 
 
 //Connect DB

@@ -36,6 +36,10 @@ class Login extends Component {
                 } else if(response.hasOwnProperty('token') && response.user.userRole === 'admin'){
                     window.localStorage.setItem('auth', JSON.stringify(response))
                     this.props.history.push('/admin-dashboard');
+
+                }  else if(response.hasOwnProperty('token') && response.user.userRole === 'storeManager'){
+                    window.localStorage.setItem('auth', JSON.stringify(response))
+                    this.props.history.push('/store-manager-dashboard');
                 }
             })
             .catch(error => {
