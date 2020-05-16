@@ -7,6 +7,7 @@ import Slideshow from '../SlideShow/Slide';
 
 class ShopStore extends Component{
 
+
     render() {
 
         return (

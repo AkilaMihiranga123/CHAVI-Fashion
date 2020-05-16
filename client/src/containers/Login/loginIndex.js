@@ -12,7 +12,10 @@ class Login extends Component {
         this.state = {
             redirectToReferrer: false,
             email: '',
-            password: ''
+            password: '',
+            errors: {},
+            badRequestError: ''
+            
         }
 
         this.onChange = this.onChange.bind(this);
@@ -26,7 +29,8 @@ class Login extends Component {
     loginHandler = (e) => {
         e.preventDefault();
 
-        this.props.authenticate(this.state.email, this.state.password)
+        if(this.validateForm()){
+            this.props.authenticate(this.state.email, this.state.password)
             .then(response => {
                 console.log(response);
                 if(response.hasOwnProperty('token') && response.user.userRole === 'user'){
@@ -40,11 +44,45 @@ class Login extends Component {
                 }  else if(response.hasOwnProperty('token') && response.user.userRole === 'storeManager'){
                     window.localStorage.setItem('auth', JSON.stringify(response))
                     this.props.history.push('/store-manager-dashboard');
+                } else {
+                    const badRequest = "*Invalid Email or Password.";
+                    this.setState({
+                        badRequestError: badRequest
+                    });
                 }
             })
             .catch(error => {
                 console.log(error);
             })
+        }
+    }
+
+    validateForm() {
+        let errors = {};
+        let formIsValid = true;
+
+        if (!this.state.email) {
+            formIsValid = false;
+            errors["email"] = "*Please Enter Your Email";
+        }
+
+        else if (typeof this.state.email !== "undefined") {
+            const pattern = new RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/);
+            if (!pattern.test(this.state.email)) {
+                formIsValid = false;
+                errors["email"] = "*Please Enter Valid Email.";
+            }
+        }
+
+        if (!this.state.password) {
+            formIsValid = false;
+            errors["password"] = "*Please Create Password.";
+        }
+
+        this.setState({
+            errors: errors
+        });
+        return formIsValid;
     }
 
     render() {
@@ -56,7 +94,7 @@ class Login extends Component {
                         <form onSubmit={this.loginHandler} autoComplete="off">
                             <div className="form-group">
                                 <input
-                                    type="email"
+                                    type="text"
                                     name="email"
                                     value={this.state.email}
                                     onChange={this.onChange}
@@ -64,6 +102,7 @@ class Login extends Component {
                                     placeholder="Enter Email"
                                 />
                             </div>
+                            <div style={{fontSize:13, color: "red"}}>{this.state.errors.email}</div>
                             <div className="form-group">
                                 <input
                                     type="password"
@@ -74,6 +113,8 @@ class Login extends Component {
                                     placeholder="Enter Password"
                                 />
                             </div>
+                            <div style={{fontSize:13, color: "red"}}>{this.state.errors.password}</div><br/>
+                            <div style={{fontSize:13, color: "red"}}>{this.state.badRequestError}</div><br/>
                             <button type="submit" className="btn btn-primary btn-block">Login</button><br/>
                             <a href="/" className="btn btn-danger btn-block">Cancel</a>
                         </form>
