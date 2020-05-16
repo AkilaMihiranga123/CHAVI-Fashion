@@ -2,17 +2,17 @@ const mongoose = require('mongoose');
 
 const categorySchema = mongoose.Schema({
 
-    name: { 
+    category_name: { 
         type: String,
         required: true
      },
 
-    slug: {
+    category_slug: {
          type: String,
          unique: true
     },
 
-    parent: {
+    category_parent: {
          type: String
     }
    

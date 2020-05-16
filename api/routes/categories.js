@@ -6,46 +6,43 @@ const Category = require('../models/category');
 
 
 categoryTree = (parentId = "", docs) => {
-    const category = docs.filter(doc => parentId == doc.parent);
+    const category = docs.filter(doc => parentId == doc.category_parent);
 
     var categories = [];
     for(var cat of category){
         categories.push({
             _id: cat._id,
-            name: cat.name,
-            slug: cat.slug,
+            category_name: cat.category_name,
+            category_slug: cat.category_slug,
             children: categoryTree(cat._id, docs)
         })
     }
     return categories;
 }
 
-router.get('/', (req, res, next) => {
-
-    Category.find({})
-    .exec()
-    .then(docs => {
-        
-        const categories = categoryTree('', docs);
-
-        res.status(201).json({
-            message: categories
-        });
-    })
-    .catch(er => {
-        res.status(500).json({
-            error: er
+router.get('/',(req,res) => {
+    Category.find()
+        .then(category => {
+            res.status(200).json({
+                status: 'success',
+                data: category
+            });
         })
-    });
-
+        .catch(error => {
+            res.status(400).json({
+                status: 'error',
+                error: error
+            });
+        });
 });
 
-router.post('/', (req, res, next) => {
+//Add Category
+router.post('/add-category', (req, res, next) => {
 
     const category = new Category({
-        name: req.body.name,
-        slug: req.body.slug,
-        parent: req.body.parent,
+        category_name: req.body.category_name,
+        category_slug: req.body.category_slug,
+        category_parent: req.body.category_parent,
     });
 
     category.save()
@@ -61,5 +58,66 @@ router.post('/', (req, res, next) => {
     });
 
 });
+
+//Update Category
+router.post('/update/:id', (req, res) => {
+    Category.findByIdAndUpdate(req.params.id)
+        .then(category => {
+            category.category_name = req.body.category_name,
+            category.category_slug = req.body.category_slug,
+            category.category_parent = req.body.category_parent,
+
+            category.save()
+                    .then(category => {
+                        res.status(200).json({
+                            message: 'Category Updated Successfully',
+                            data: category
+                        });
+                    })
+                    .catch(error => {
+                        res.status(400).json({
+                            error: error
+                        });
+                    });
+        })
+        .catch(error => {
+            res.status(400).json({
+                error: error
+            });
+        })
+});
+
+//Category find by id
+router.get('/:id',(req, res) => {
+    Category.findById(req.params.id)
+        .then(category => {
+            res.status(200).json({
+                message: 'Find The Category',
+                data: category
+            });
+        })
+        .catch(error => {
+            res.status(400).json({
+                error: error
+            });
+        });
+});
+
+//Remove Category
+router.delete('/:id',(req, res) => {
+    Category.findByIdAndDelete(req.params.id)
+        .then(category => {
+            res.status(200).json({
+                message: 'Category removed Successfully',
+                data: category
+            });
+        })
+        .catch(error => {
+            res.status(400).json({
+                error: error
+            });
+        });
+});
+
 
 module.exports = router;

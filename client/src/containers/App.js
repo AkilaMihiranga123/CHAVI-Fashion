@@ -18,6 +18,10 @@ import StoreManagerList from './AdminDashboard/ManagerManagement/StoreManagersLi
 import AddStoreManager from './AdminDashboard/ManagerManagement/AddStoreManager';
 import EditStoreManager from './AdminDashboard/ManagerManagement/EditStoreManager';
 
+import CategoryList from './AdminDashboard/ManageCategory/CategoryList';
+import AddCategory from './AdminDashboard/ManageCategory/AddCategory';
+import EditCategory from './AdminDashboard/ManageCategory/EditCategory';
+
 
 const rootReducers = combineReducers({
     auth: authReducers
@@ -41,6 +45,9 @@ function App() {
                         <Route path="/store-managers-list" component={StoreManagerList} />
                         <Route path="/add-store-manager" component={AddStoreManager} />
                         <Route path="/edit-store-manager/:id" component={EditStoreManager} />
+                        <Route path="/add-category" component={AddCategory} />
+                        <Route path="/category-list" component={CategoryList} />
+                        <Route path="/edit-category/:id" component={EditCategory} />
 
                         <Route path="/"  component={Shop} />
 
