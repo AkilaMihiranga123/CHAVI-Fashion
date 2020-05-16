@@ -14,7 +14,8 @@ class Signup extends Component {
             email: '',
             gender: '',
             contact_Name: '',
-            password: ''
+            password: '',
+            errors: {}
         }
 
         this.onChange = this.onChange.bind(this);
@@ -28,27 +29,89 @@ class Signup extends Component {
     signupHandler = (e) => {
         e.preventDefault();
 
-        const user = {
-            first_Name: this.state.first_Name,
-            last_Name: this.state.last_Name,
-            email: this.state.email,
-            gender: this.state.gender,
-            contact_Number: this.state.contact_Number,
-            password: this.state.password
+        if(this.validateForm()){
+            const user = {
+                first_Name: this.state.first_Name,
+                last_Name: this.state.last_Name,
+                email: this.state.email,
+                gender: this.state.gender,
+                contact_Number: this.state.contact_Number,
+                password: this.state.password
+            }
+
+            this.props.signup(user)
+                .then(jsonResponse => {
+                    console.log(jsonResponse);
+                    this.props.history.push({
+                        pathname: '/login',
+                        search: '?signup=success',
+                        state: jsonResponse.message
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
+    }
+
+    validateForm() {
+        let errors = {};
+        let formIsValid = true;
+
+        if (!this.state.first_Name) {
+            formIsValid = false;
+            errors["first_Name"] = "*Please Enter Your First Name.";
         }
 
-        this.props.signup(user)
-            .then(jsonResponse => {
-                console.log(jsonResponse);
-                this.props.history.push({
-                    pathname: '/login',
-                    search: '?signup=success',
-                    state: jsonResponse.message
-                });
-            })
-            .catch(error => {
-                console.log(error);
-            })
+        if (!this.state.last_Name) {
+            formIsValid = false;
+            errors["last_Name"] = "*Please Enter Your Last Name.";
+        }
+
+        if (!this.state.email) {
+            formIsValid = false;
+            errors["email"] = "*Please Enter Your Email";
+        }
+
+        else if (typeof this.state.email !== "undefined") {
+            const pattern = new RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/);
+            if (!pattern.test(this.state.email)) {
+                formIsValid = false;
+                errors["email"] = "*Please Enter Valid Email.";
+            }
+        }
+
+        if (!this.state.gender) {
+            formIsValid = false;
+            errors["gender"] = "*Please Select Your Gender.";
+        }
+
+        if (!this.state.contact_Number) {
+            formIsValid = false;
+            errors["contact_Number"] = "*Please Enter Your Contact Number.";
+        }
+
+        else if (typeof this.state.contact_Number !== "undefined") {
+            if (!this.state.contact_Number.match(/^[0-9]{10}$/)) {
+                formIsValid = false;
+                errors["contact_Number"] = "*Please Enter Valid Contact Number.";
+            }
+        }
+
+        if (!this.state.password) {
+            formIsValid = false;
+            errors["password"] = "*Please Create Password.";
+        }
+
+        else if (this.state.password.length < 6) {
+            formIsValid = false;
+            errors["password"] = "*Password must be 6 Characters long.";
+        }
+
+        this.setState({
+            errors: errors
+        });
+        return formIsValid;
     }
 
     componentDidMount() {
@@ -93,6 +156,7 @@ class Signup extends Component {
                                     placeholder="Enter First Name"
                                 />
                             </div>
+                            <div style={{ fontSize:13, color: "red"}}>{this.state.errors.first_Name}</div>
                             <div className="form-group">
                                 <input
                                     type="text"
@@ -103,9 +167,10 @@ class Signup extends Component {
                                     placeholder="Enter Last Name"
                                 />
                             </div>
+                            <div style={{fontSize:13, color: "red"}}>{this.state.errors.last_Name}</div>
                             <div className="form-group">
                                 <input
-                                    type="email"
+                                    type="text"
                                     name="email"
                                     value={this.state.email}
                                     onChange={this.onChange}
@@ -113,16 +178,20 @@ class Signup extends Component {
                                     placeholder="Enter Email"
                                 />
                             </div>
+                            <div style={{fontSize:13, color: "red"}}>{this.state.errors.email}</div>
                             <div className="form-group">
-                                <input
-                                    type="text"
-                                    name="gender"
-                                    value={this.state.gender}
-                                    onChange={this.onChange}
-                                    className="form-control"
-                                    placeholder="Enter Gender"
-                                />
+                                <select className="custom-select"
+                                        type="text"
+                                        name="gender"
+                                        value={this.state.gender}
+                                        onChange={this.onChange}>
+
+                                    <option>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
                             </div>
+                            <div style={{fontSize:13, color: "red"}}>{this.state.errors.gender}</div>
                             <div className="form-group">
                                 <input
                                     type="text"
@@ -133,6 +202,7 @@ class Signup extends Component {
                                     placeholder="Enter Contact Number"
                                 />
                             </div>
+                            <div style={{fontSize:13, color: "red"}}>{this.state.errors.contact_Number}</div>
                             <div className="form-group">
                                 <input
                                     type="password"
@@ -143,10 +213,11 @@ class Signup extends Component {
                                     placeholder="Create Password"
                                 />
                             </div>
+                            <div style={{fontSize:13, color: "red"}}>{this.state.errors.password}</div><br/>
                             <button type="submit" className="btn btn-primary btn-block">Register</button><br/>
                             <a href="/" className="btn btn-danger btn-block">Cancel</a>
                         </form>
-                        <p className="lead mt-4">Have An Account? <Link to="/login">Login</Link></p>
+                        <p className="lead mt-4">Have An Account? <Link style={{color: "DODGERBLUE"}} to="/login">Login</Link></p>
                     </div>
                 </div>
             </div>
