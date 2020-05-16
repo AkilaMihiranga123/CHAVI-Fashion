@@ -73,8 +73,8 @@ export default class CategoryList extends Component{
                                                 <th scope="col">Category Name</th>
                                                 <th scope="col">Category Slug</th>
                                                 <th scope="col">Category Parent</th>
-                                                <th scope="col">Category Update</th>
-                                                <th scope="col">Category Remove</th>
+                                                <th scope="col">Update Category</th>
+                                                <th scope="col">Remove Category</th>
                                             </tr>
                                             </thead>
                                             <tbody>

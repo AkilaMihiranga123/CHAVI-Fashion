@@ -42,7 +42,7 @@ router.post('/add-category', (req, res, next) => {
     const category = new Category({
         category_name: req.body.category_name,
         category_slug: req.body.category_slug,
-        category_parent: req.body.category_parent,
+        category_parent: req.body.category_parent
     });
 
     category.save()
@@ -65,7 +65,7 @@ router.post('/update/:id', (req, res) => {
         .then(category => {
             category.category_name = req.body.category_name,
             category.category_slug = req.body.category_slug,
-            category.category_parent = req.body.category_parent,
+            category.category_parent = req.body.category_parent
 
             category.save()
                     .then(category => {

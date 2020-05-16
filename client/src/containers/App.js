@@ -45,6 +45,7 @@ function App() {
                         <Route path="/store-managers-list" component={StoreManagerList} />
                         <Route path="/add-store-manager" component={AddStoreManager} />
                         <Route path="/edit-store-manager/:id" component={EditStoreManager} />
+                        <Route path="/edit-category/:id" component={EditCategory} />
                         <Route path="/add-category" component={AddCategory} />
                         <Route path="/category-list" component={CategoryList} />
                         <Route path="/edit-category/:id" component={EditCategory} />
