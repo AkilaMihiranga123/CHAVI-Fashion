@@ -19,7 +19,8 @@ export default class EditStoreManager extends Component {
             last_Name: '',
             email: '',
             gender: '',
-            contact_Number: ''
+            contact_Number: '',
+            errors: {}
         }
     }
 
@@ -74,18 +75,70 @@ export default class EditStoreManager extends Component {
     onSubmit(e) {
         e.preventDefault();
 
-        const admin = {
-            first_Name: this.state.first_Name,
-            last_Name: this.state.last_Name,
-            email: this.state.email,
-            gender: this.state.gender,
-            contact_Number: this.state.contact_Number
+        if(this.validateForm()){
+            const admin = {
+                first_Name: this.state.first_Name,
+                last_Name: this.state.last_Name,
+                email: this.state.email,
+                gender: this.state.gender,
+                contact_Number: this.state.contact_Number
+            }
+    
+            axios.post('http://localhost:5000/storeManager/update/'+this.props.match.params.id, admin)
+                .then(res => console.log(res.data));
+    
+            window.location = '/store-managers-list';
+        }
+    }
+
+    validateForm() {
+        let errors = {};
+        let formIsValid = true;
+
+        if (!this.state.first_Name) {
+            formIsValid = false;
+            errors["first_Name"] = "*Please Enter First Name.";
         }
 
-        axios.post('http://localhost:5000/storeManager/update/'+this.props.match.params.id, admin)
-            .then(res => console.log(res.data));
+        if (!this.state.last_Name) {
+            formIsValid = false;
+            errors["last_Name"] = "*Please Enter Last Name.";
+        }
 
-        window.location = '/store-managers-list';
+        if (!this.state.email) {
+            formIsValid = false;
+            errors["email"] = "*Please Enter Email";
+        }
+
+        else if (typeof this.state.email !== "undefined") {
+            const pattern = new RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/);
+            if (!pattern.test(this.state.email)) {
+                formIsValid = false;
+                errors["email"] = "*Please Enter Valid Email.";
+            }
+        }
+
+        if (!this.state.gender || this.state.gender === 'Select Gender') {
+            formIsValid = false;
+            errors["gender"] = "*Please Select Gender.";
+        }
+
+        if (!this.state.contact_Number) {
+            formIsValid = false;
+            errors["contact_Number"] = "*Please Enter Contact Number.";
+        }
+
+        else if (typeof this.state.contact_Number !== "undefined") {
+            if (!this.state.contact_Number.match(/^[0-9]{10}$/)) {
+                formIsValid = false;
+                errors["contact_Number"] = "*Please Enter Valid Contact Number.";
+            }
+        }
+
+        this.setState({
+            errors: errors
+        });
+        return formIsValid;
     }
 
     render() {
@@ -108,6 +161,7 @@ export default class EditStoreManager extends Component {
                                         placeholder="Enter First Name"
                                     />
                                 </div>
+                                <div style={{fontSize:13, color: "red"}}>{this.state.errors.first_Name}</div>
                                 <div className="form-group">
                                     <input
                                         type="text"
@@ -118,6 +172,7 @@ export default class EditStoreManager extends Component {
                                         placeholder="Enter Last Name"
                                     />
                                 </div>
+                                <div style={{fontSize:13, color: "red"}}>{this.state.errors.last_Name}</div>
                                 <div className="form-group">
                                     <input
                                         type="email"
@@ -128,16 +183,20 @@ export default class EditStoreManager extends Component {
                                         placeholder="Enter Email"
                                     />
                                 </div>
+                                <div style={{fontSize:13, color: "red"}}>{this.state.errors.email}</div>
                                 <div className="form-group">
-                                    <input
-                                        type="text"
-                                        name="gender"
-                                        value={this.state.gender}
-                                        onChange={this.onChangeGender}
-                                        className="form-control"
-                                        placeholder="Enter Gender"
-                                    />
+                                    <select className="custom-select"
+                                            type="text"
+                                            name="gender"
+                                            value={this.state.gender}
+                                            onChange={this.onChangeGender}>
+
+                                        <option>Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
                                 </div>
+                                <div style={{fontSize:13, color: "red"}}>{this.state.errors.gender}</div>
                                 <div className="form-group">
                                     <input
                                         type="text"
@@ -148,6 +207,7 @@ export default class EditStoreManager extends Component {
                                         placeholder="Enter Contact Number"
                                     />
                                 </div>
+                                <div style={{fontSize:13, color: "red"}}>{this.state.errors.contact_Number}</div><br/>
                                 <button type="submit" className="btn btn-primary btn-block">Update Store Manager</button><br/>
                                 <a href="/store-managers-list" className="btn btn-danger btn-block">Cancel</a>
                             </form>
