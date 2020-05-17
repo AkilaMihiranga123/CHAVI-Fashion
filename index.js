@@ -15,12 +15,16 @@ const userRoutes = require('./api/routes/user');
 const adminRoutes = require('./api/routes/admin');
 const storeManagerRoutes = require('./api/routes/storeManager');
 const categoryRoutes = require('./api/routes/categories');
+const ProductRoutes = require('./api/routes/product');
 
 //use imported routes
 app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/storeManager', storeManagerRoutes);
 app.use('/category', categoryRoutes);
+app.use('/product', ProductRoutes);
+
+app.use('/uploads', express.static('uploads'));
 
 
 //Connect DB
