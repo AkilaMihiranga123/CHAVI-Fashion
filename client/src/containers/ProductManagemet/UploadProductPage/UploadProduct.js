@@ -68,6 +68,7 @@ function UploadProductpage(props) {
                     alert('Failed to upload Product');
                 }
             });
+
     }
     
     return (
@@ -76,11 +77,11 @@ function UploadProductpage(props) {
             <div className="row mt-5">
                 <div className="col-md-6 m-auto">
                     <div className="card card-body">
-                        <h1 className="text-center mb-3">Upload Product</h1><br/><br/>
+                        <h1 className="text-center mb-3">Upload Product</h1>
 
                         <form onSubmit={onSubmit}>
 
-                            <FileUpload/><br/><br/>
+                            <FileUpload refreshFunction={updateImages}/><br/><br/>
 
                             <div className="form-group">
                                 <input type="text" name="Product_name" value={Product_name} onChange={onProductNameChange}
