@@ -117,6 +117,8 @@ router.post('/login', (req, res) => {
                                                 first_Name: user.first_Name,
                                                 last_Name: user.last_Name,
                                                 email: user.email,
+                                                gender: user.gender,
+                                                contact_Number: user.contact_Number,
                                                 userRole: user.userRole
                                             },
                                             token: token
