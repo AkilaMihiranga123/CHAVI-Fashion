@@ -22,6 +22,9 @@ import CategoryList from './AdminDashboard/ManageCategory/CategoryList';
 import AddCategory from './AdminDashboard/ManageCategory/AddCategory';
 import EditCategory from './AdminDashboard/ManageCategory/EditCategory';
 
+import UploadProduct from './ProductManagemet/UploadProductPage/UploadProduct';
+import ProductList from './ProductManagemet/UploadProductPage/ProductList';
+
 const rootReducers = combineReducers({
     auth: authReducers
 });
@@ -48,7 +51,8 @@ function App() {
                         <Route path="/add-category" component={AddCategory} />
                         <Route path="/category-list" component={CategoryList} />
                         <Route path="/edit-category/:id" component={EditCategory} />
-
+                        <Route path="/add-product" component={UploadProduct} />
+                        <Route path="/product-list" component={ProductList} />
 
                         <Route path="/"  component={Shop} />
 
