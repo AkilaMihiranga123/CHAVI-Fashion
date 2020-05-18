@@ -26,6 +26,8 @@ import UploadProduct from './ProductManagemet/UploadProductPage/UploadProduct';
 import ProductList from './ProductManagemet/UploadProductPage/ProductList';
 
 import Profile from './Profile/Profile';
+import EditProfile from './Profile/EditProfile';
+import UpdatePassword from './Profile/UpdatePassword';
 
 const rootReducers = combineReducers({
     auth: authReducers
@@ -56,6 +58,8 @@ function App() {
                         <Route path="/add-product" component={UploadProduct} />
                         <Route path="/product-list" component={ProductList} />
                         <Route path="/my-account" component={Profile} />
+                        <Route path="/update-profile/:id" component={EditProfile} />
+                        <Route path="/update-password/:id" component={UpdatePassword} />
 
                         <Route path="/"  component={Shop} />
 

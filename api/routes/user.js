@@ -213,4 +213,60 @@ router.get('/:id',(req, res) => {
 });
 
 
+//update user password route
+router.post('/update-password/:id', (req, res) => {
+    User.findByIdAndUpdate(req.params.id)
+        .then(user => {
+            bcrypt.compare(req.body.password, user.password, (err, result) => {
+                if(err){
+                    return res.status(400).json({
+                        status: 'error',
+                        message: 'Upate Failed'
+                    })
+                } else {
+                    if(result){
+                        const newP = req.body.newPassword;
+                        bcrypt.genSalt(10, (err, salt) =>
+                        bcrypt.hash(newP, salt, (err, hash) => {
+                            if(err){
+                                return res.status(400).json({
+                                    status: 'error',
+                                    error: 'Error occurred'
+                                });
+                            }
+                            //Set new password to hashed
+                            user.password = hash;
+                            //save new Password
+                            user.save()
+                                .then(user => {
+                                    res.status(200).json({
+                                        message: 'Password Updated Successfully',
+                                        data: user
+                                    });
+                                })
+                                .catch(error => {
+                                    res.status(400).json({
+                                        status: 'error',
+                                        message: 'Password not updated'
+                                    });
+                                });
+                        }));
+                    } else{
+                        res.status(400).json({
+                            status: 'error',
+                            message: 'Password Not Matched'
+                        });
+                    }
+                }
+            });
+
+        })
+        .catch(error => {
+            res.status(400).json({
+                status: 'error',
+                    message: 'User ID not exists'
+            });
+        })
+});
+
 module.exports = router;

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import Header from '../../../components/Header/Header';
+import Header from '../../components/Header/Header';
 
-export default class EditUser extends Component {
+export default class EditProfile extends Component {
 
     constructor(props) {
         super(props);
@@ -74,7 +74,7 @@ export default class EditUser extends Component {
     onSubmit(e) {
         e.preventDefault();
 
-        const user = {
+        const updateProfile = {
             first_Name: this.state.first_Name,
             last_Name: this.state.last_Name,
             email: this.state.email,
@@ -82,12 +82,9 @@ export default class EditUser extends Component {
             contact_Number: this.state.contact_Number
         }
 
-        console.log(user);
-
-        axios.post('http://localhost:5000/user/update/'+this.props.match.params.id, user)
+        axios.post('http://localhost:5000/user/update/'+this.props.match.params.id, updateProfile)
             .then(res => console.log(res.data));
 
-        window.location = '/users-list';
     }
 
     render() {
@@ -150,8 +147,8 @@ export default class EditUser extends Component {
                                         placeholder="Enter Contact Number"
                                     />
                                 </div>
-                                <button type="submit" className="btn btn-primary btn-block">Update User</button><br/>
-                                <a href="/users-list" className="btn btn-danger btn-block">Cancel</a>
+                                <button type="submit" className="btn btn-primary btn-block">Update Profile</button><br/>
+                                <a href="/" className="btn btn-danger btn-block">Cancel</a>
                             </form>
                         </div>
                     </div>

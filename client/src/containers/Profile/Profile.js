@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom'
+import axios from 'axios';
 import Header from '../../components/Header/Header';
 
 class Profile extends Component {
@@ -7,6 +9,7 @@ class Profile extends Component {
     constructor() {
         super();
         this.state = {
+            id: '',
             first_Name : '',
             last_Name : '',
             email : '',
@@ -17,15 +20,21 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.auth.user);
-        this.data = this.props.auth.user
-        this.setState({
-            first_Name : this.data.first_Name,
-            last_Name : this.data.last_Name,
-            email : this.data.email,
-            gender: this.data.gender,
-            contact_Number: this.data.contact_Number
-        })
+        axios.get('http://localhost:5000/user/'+this.props.auth.user.user_id)
+            .then(response => {
+                console.log(response);
+                this.setState({
+                    id: response.data.data._id,
+                    first_Name: response.data.data.first_Name,
+                    last_Name: response.data.data.last_Name,
+                    email: response.data.data.email,
+                    gender: response.data.data.gender,
+                    contact_Number: response.data.data.contact_Number
+                })
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
     }
 
     render() {
@@ -41,8 +50,9 @@ class Profile extends Component {
                                     <div className="text-center">
                                         <h5><i className="far fa-user-circle fa-6x"></i></h5>
                                         <h3><b>{this.state.first_Name}   {this.state.last_Name}</b></h3>
-                                        <h1><a className="btn btn-primary" href="/edit-profile"><i className="fas fa-user-edit"></i> EDIT PROFILE DETAILS</a></h1>
-                                    </div>
+                                        <Link to={"/update-profile/"+this.state.id} className="btn btn-primary"><i className="fas fa-user-edit"></i>  EDIT PROFILE DETAILS</Link>&nbsp;&nbsp;
+                                        <Link to={"/update-password/"+this.state.id} className="btn btn-info"><i className="fas fa-user-edit"></i>  EDIT PASSWORD</Link>
+                                    </div><br/>
                                     <table className="table table-hover">
                                         <tbody>
                                             <tr>
