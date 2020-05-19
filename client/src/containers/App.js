@@ -22,8 +22,8 @@ import CategoryList from './AdminDashboard/ManageCategory/CategoryList';
 import AddCategory from './AdminDashboard/ManageCategory/AddCategory';
 import EditCategory from './AdminDashboard/ManageCategory/EditCategory';
 
-import UploadProduct from './ProductManagemet/UploadProductPage/UploadProduct';
-import ProductList from './ProductManagemet/UploadProductPage/ProductList';
+import UploadProduct from './ProductManagemet/UploadProduct';
+import ProductList from './ProductManagemet/ProductList';
 
 const rootReducers = combineReducers({
     auth: authReducers

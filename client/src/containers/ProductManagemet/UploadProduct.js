@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import Header from "../../../components/Header/Header";
+import Header from "../../components/Header/Header";
 import FileUpload from "./FileUpload";
 
 function UploadProductpage(props) {
@@ -77,7 +77,7 @@ function UploadProductpage(props) {
             <div className="row mt-5">
                 <div className="col-md-6 m-auto">
                     <div className="card card-body">
-                        <h1 className="text-center mb-3">Upload Product</h1>
+                        <h1 className="text-center mb-3">Upload Product</h1><br/><br/>
 
                         <form onSubmit={onSubmit}>
 
