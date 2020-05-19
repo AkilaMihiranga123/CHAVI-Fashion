@@ -25,6 +25,10 @@ import EditCategory from './AdminDashboard/ManageCategory/EditCategory';
 import UploadProduct from './ProductManagemet/UploadProduct';
 import ProductList from './ProductManagemet/ProductList';
 
+import Profile from './Profile/Profile';
+import EditProfile from './Profile/EditProfile';
+import UpdatePassword from './Profile/UpdatePassword';
+
 const rootReducers = combineReducers({
     auth: authReducers
 });
@@ -53,6 +57,9 @@ function App() {
                         <Route path="/edit-category/:id" component={EditCategory} />
                         <Route path="/add-product" component={UploadProduct} />
                         <Route path="/product-list" component={ProductList} />
+                        <Route path="/my-account" component={Profile} />
+                        <Route path="/update-profile/:id" component={EditProfile} />
+                        <Route path="/update-password/:id" component={UpdatePassword} />
 
                         <Route path="/"  component={Shop} />
 

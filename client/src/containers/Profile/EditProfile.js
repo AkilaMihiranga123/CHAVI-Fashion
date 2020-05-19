@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import Header from '../../../components/Header/Header';
+import Header from '../../components/Header/Header';
 
-export default class EditUser extends Component {
+export default class EditProfile extends Component {
 
     constructor(props) {
         super(props);
@@ -20,7 +20,8 @@ export default class EditUser extends Component {
             email: '',
             gender: '',
             contact_Number: '',
-            errors: {}
+            errors: {},
+            success: ''
         }
     }
 
@@ -76,7 +77,7 @@ export default class EditUser extends Component {
         e.preventDefault();
 
         if(this.validateForm()){
-            const user = {
+            const updateProfile = {
                 first_Name: this.state.first_Name,
                 last_Name: this.state.last_Name,
                 email: this.state.email,
@@ -84,13 +85,18 @@ export default class EditUser extends Component {
                 contact_Number: this.state.contact_Number
             }
     
-            console.log(user);
-    
-            axios.post('http://localhost:5000/user/update/'+this.props.match.params.id, user)
-                .then(res => console.log(res.data));
-    
-            window.location = '/users-list';
+            axios.post('http://localhost:5000/user/update/'+this.props.match.params.id, updateProfile)
+                .then(res => {
+                    console.log(res.data);
+                    const successMsg = "Pofile Details Successfully Updated.!";
+                    this.setState({
+                        success: successMsg
+                    });
+
+                });
+                
         }
+
     }
 
     validateForm() {
@@ -150,7 +156,7 @@ export default class EditUser extends Component {
                 <div className="row mt-5">
                     <div className="col-md-4 m-auto">
                         <div className="card card-body">
-                            <h1 className="text-center mb-3">UPDATE USER</h1>
+                            <h1 className="text-center mb-3">UPDATE PROFILE</h1>
 
                             <form onSubmit={this.onSubmit} autoComplete="off">
                                 <div className="form-group">
@@ -210,8 +216,9 @@ export default class EditUser extends Component {
                                     />
                                 </div>
                                 <div style={{fontSize:13, color: "red"}}>{this.state.errors.contact_Number}</div><br/>
-                                <button type="submit" className="btn btn-primary btn-block">Update User</button><br/>
-                                <a href="/users-list" className="btn btn-danger btn-block">Cancel</a>
+                                <div style={{fontSize:15, textAlign:"center", color: "green"}}>{this.state.success}</div><br/>
+                                <button type="submit" className="btn btn-primary btn-block">Update Profile</button><br/>
+                                <a href="/" className="btn btn-danger btn-block">Cancel</a>
                             </form>
                         </div>
                     </div>
