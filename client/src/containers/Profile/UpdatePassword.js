@@ -9,11 +9,17 @@ export default class UpdatePassword extends Component {
 
         this.onChangeCurrentPassword = this.onChangeCurrentPassword.bind(this);
         this.onChangeNewPassword = this.onChangeNewPassword.bind(this);
+        this.onChangeReEnterPassword = this.onChangeReEnterPassword.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
             password: '',
-            newPassword: ''
+            newPassword: '',
+            reEnterPassword: '',
+            NotMatchedError: '',
+            errors: {},
+            success: '',
+            currentPassNotMatchError: ''
         }
     }
 
@@ -29,22 +35,73 @@ export default class UpdatePassword extends Component {
         });
     }
 
+    onChangeReEnterPassword(e) {
+        this.setState({
+            reEnterPassword: e.target.value
+        });
+    }
+
     onSubmit(e) {
         e.preventDefault();
 
-        const updatePassword = {
-            password: this.state.password,
-            newPassword: this.state.newPassword
+        if(this.validateForm()){
+            const updatePassword = {
+                password: this.state.password,
+                newPassword: this.state.newPassword
+            }
+    
+            axios.post('http://localhost:5000/user/update-password/'+this.props.match.params.id, updatePassword)
+                .then(res => {
+                    console.log(res.data);
+                    const successMsg = "Pofile Details Successfully Updated.!";
+                    this.setState({
+                        success: successMsg
+                    });
+                })
+                .catch(() => {
+                    console.log('Error');
+                    const currentNotMatchMsg = "*Current Password doesn't match";
+                    this.setState({
+                        currentPassNotMatchError: currentNotMatchMsg
+                    });
+                });
+                this.setState({
+                    NotMatchedError: '',
+                    currentPassNotMatchError: '',
+                    success: ''
+                });    
         }
 
-        axios.post('http://localhost:5000/user/update-password/'+this.props.match.params.id, updatePassword)
-            .then(res => {
-                console.log(res.data);
-            })
-            .catch(() => {
-                console.log('Error');
-            });
+    }
 
+    validateForm() {
+        let errors = {};
+        let formIsValid = true;
+
+        if (!this.state.password) {
+            formIsValid = false;
+            errors["password"] = "*Please Enter Current Password.";
+        }
+
+        if (!this.state.newPassword) {
+            formIsValid = false;
+            errors["newPassword"] = "*Please Enter New Password.";
+        }
+
+        if (!this.state.reEnterPassword) {
+            formIsValid = false;
+            errors["reEnterPassword"] = "*Please Re-Enter New Password";
+        }
+
+        if (this.state.newPassword !== this.state.reEnterPassword) {
+            formIsValid = false;
+            errors["NotMatchedError"] = "*New Password and Re-Enter Password dosen't match";
+        }
+
+        this.setState({
+            errors: errors
+        });
+        return formIsValid;
     }
 
     render() {
@@ -67,6 +124,7 @@ export default class UpdatePassword extends Component {
                                         placeholder="Enter Current Password"
                                     />
                                 </div>
+                                <div style={{fontSize:13, color: "red"}}>{this.state.errors.password}</div>
                                 <div className="form-group">
                                     <input
                                         type="password"
@@ -77,7 +135,22 @@ export default class UpdatePassword extends Component {
                                         placeholder="Enter New Password"
                                     />
                                 </div>
-                                <button type="submit" className="btn btn-primary btn-block">Update Password</button><br/>
+                                <div style={{fontSize:13, color: "red"}}>{this.state.errors.newPassword}</div>
+                                <div className="form-group">
+                                    <input
+                                        type="password"
+                                        name="reEnterPassword"
+                                        value={this.state.reEnterPassword}
+                                        onChange={this.onChangeReEnterPassword}
+                                        className="form-control"
+                                        placeholder="Re-Enter New Password"
+                                    />
+                                </div>
+                                <div style={{fontSize:13, color: "red"}}>{this.state.errors.reEnterPassword}</div>
+                                <div style={{fontSize:15, textAlign: "center", color: "red"}}>{this.state.errors.NotMatchedError}</div>
+                                <div style={{fontSize:15, textAlign: "center", color: "red"}}>{this.state.currentPassNotMatchError}</div>
+                                <div style={{fontSize:15, textAlign: "center", color: "green"}}>{this.state.success}</div>
+                                <br/><button type="submit" className="btn btn-primary btn-block">Update Password</button><br/>
                                 <a href="/" className="btn btn-danger btn-block">Cancel</a>
                             </form>
                         </div>

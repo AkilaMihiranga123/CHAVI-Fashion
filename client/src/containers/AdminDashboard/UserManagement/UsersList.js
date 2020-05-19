@@ -10,7 +10,6 @@ const User = props => (
         <td>{props.user.email}</td>
         <td>{props.user.gender}</td>
         <td>{props.user.contact_Number}</td>
-        <td>{props.user.userRole}</td>
         <td>
             <Link to={"/edit-user/"+props.user._id} className="btn btn-primary">Edit</Link>
         </td>
@@ -61,7 +60,7 @@ export default class UsersList extends Component{
             
             <div>
                 <Header/>
-                <div className="row mt-5">
+                <div className="mt-5">
                     <div className="col-md-10 m-auto">
                         <div className="card card-body text-center">
                             <h1>USERS LIST</h1>
@@ -76,7 +75,6 @@ export default class UsersList extends Component{
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Gender</th>
                                                 <th scope="col">Contact Number</th>
-                                                <th scope="col">User Role</th>
                                                 <th colSpan="2">Actions</th>
                                             </tr>
                                             </thead>
