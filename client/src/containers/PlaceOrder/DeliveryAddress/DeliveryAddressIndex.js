@@ -209,4 +209,143 @@ class PlaceOrder extends Component{
             console.log(error);
         }
     };
+
+    render() {
+        let address;
+        if (this.state.isAddressConfirm && !this.state.newAddress){
+            address = this.state.addresses.find(address => address._id === this.state.selectedAddress);
+        }else {
+            address = this.state.address;
+        }
+
+        return(
+            <React.Fragment>
+                <Header/>
+                <div className="row mt-5">
+                    <div className="col-md-4 m-auto">
+                        <div className="card card-body">
+                            <h1 className="text-center mb-3">Login {this.props.auth.isAuthenticated ? <i className="fas fa-check"></i> : null}</h1>
+                            <h2 className="text-center mb-3">Email: {this.props.auth.user.email}</h2>
+                        </div>
+                        {
+                            this.state.isAddressConfirm ?
+                                <div className="card card-body">
+                                    <h1 className="text-center mb-3">Delivery Address {this.state.isAddressConfirm ? <i className="fas fa-check"></i> : null}</h1>
+                                    <h2>
+                                        <span>{`${address.fullName} - ${address.mobileNumber} - `}</span>
+                                        <span>{ `${address.address}, ${address.cityTownDistrict}, ${address.state} - ${address.pinCode}`}</span>
+                                    </h2>
+                                </div> :
+                                <React.Fragment>
+                                    <div className="card card-body">
+                                        <h1 className="text-center mb-3">Delivery Address</h1>
+                                        {
+                                            this.state.addresses.length && this.state.addresses.map(address =>
+                                                <DeliveryAddress
+                                                    key={address._id}
+                                                    onAddressSelection={this.addressSelector}
+                                                    value={this.state.selectedAddress}
+                                                    address={address} />
+                                            )
+                                        }
+                                        {
+                                            this.state.existingAddress ?
+                                                <div>
+                                                    <button onClick={this.confirmDeliveryAddress} className=className="btn btn-primary btn-block">Deliver Here</button>
+                                                </div> : null
+                                        }
+                                    </div>
+                                    <div className="card card-body">
+                                        <div>
+                                            <input
+                                                type="radiobutton"
+                                                name="address"
+                                                label="Add new Address"
+                                                value={this.state.selectedAddress}
+                                                onChange={this.newAddressSelection}
+                                            />
+                                        </div>
+                                        {
+                                            this.state.newAddress ?
+                                                <AddressForm
+                                                    address={this.state.address}
+                                                    inputHandler={this.inputHandler}
+                                                    addressSubmitHandler={this.addressSubmitHandler}
+                                                /> : null
+                                        }
+                                    </div>
+                                </React.Fragment>
+                        }
+                        {
+                            this.state.isOrderConfirm ?
+                                <div className="card card-body">
+                                    <h1 className="text-center mb-3">Order Summary <i className="fas fa-check"></i> </h1>
+                                </div> :
+                                this.state.isAddressConfirm ?
+                                    <div className="card card-body">
+                                        <h2 className="text-center mb-3">Order Summary </h2>
+                                        {
+                                            this.props.cart.cartItem.map(item => (
+                                                <div key={item.product} style={{display: 'flex', margin: '5px 0', alignItems: 'center'}}>
+                                                    <div style={{width: '60px', height: '60px', overflow: 'hidden', position: 'relative'}}>
+                                                        <img style={{maxWidth: '100%', maxHeight: '100%', position: 'absolute', left: '50%', transform: 'translateX(-50%)'}} src={item.image} alt="" />
+                                                    </div>
+                                                    <div>
+                                                        <h5>{item.name}</h5>
+                                                        <h6>Quantity : {item.quantity}</h6>
+                                                        <h6>${item.total}</h6>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
+                                        <button onClick={this.confirmOrder} className="btn btn-primary btn-block">Continue</button>
+                                    </div>
+                                    : null
+                        }
+                        {
+                            this.state.isOrderConfirm ?
+                                <div className="card card-body">
+                                    <h4>Payment Option</h4>
+                                    <ul>
+                                        {
+                                            this.state.paymentTypes.map(payment =>
+                                                <li key={payment.id}>
+                                                    <input
+                                                        type="radiobutton"
+                                                        key={payment.id}
+                                                        name="paymentType"
+                                                        label={payment.label}
+                                                        value={payment.value}
+                                                        onChange={this.selectPaymentOption}
+                                                    />
+                                                </li>)
+                                        }
+                                    </ul>
+                                    {
+                                        this.state.selectedPaymentType !== 'cod' ?
+                                            <h2>Sorry, Only Cash on Delivery is available</h2> : null
+                                    }
+                                    <button className="btn btn-primary btn-block" onClick={this.submitOrder}>Confirm Order</button>
+
+                                </div> : null
+                        }
+                    </div>
+                    <CartPrice />
+                </div>
+            </React.Fragment>
+        )
+    }
 }
+const mapStateToProps = state => {
+    return {
+        auth: state.auth,
+        cart: state.cart
+    }
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        getToken: () => dispatch(authActions.getToken()),
+        //clearCart: () => dispatch(cartActions.clearCart())
+    }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceOrder);
