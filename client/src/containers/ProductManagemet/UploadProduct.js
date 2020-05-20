@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import Header from "../../components/Header/Header";
-import FileUpload from "./FileUpload";
+import ImageUpload from "./ImageUpload";
 
 function UploadProductpage(props) {
 
@@ -38,7 +38,7 @@ function UploadProductpage(props) {
         setCategory(event.currentTarget.value);
      }
  
-     const updateImages = (newImages) => {
+     const refreshImages = (newImages) => {
         setProduct_image(newImages);
      }
  
@@ -47,7 +47,7 @@ function UploadProductpage(props) {
 
         if (!Product_name || !Product_slug || !Product_price ||
             !Product_description || !Product_image || !Product_keyword || !Category) {
-            return alert('fill all the fields first!');
+            return alert('Some fields are empty. Fill all the fields first!');
         }
         const variables = {
             product_name: Product_name,
@@ -62,8 +62,8 @@ function UploadProductpage(props) {
         axios.post('http://localhost:5000/product/upload-product', variables)
             .then(response => {
                 if (response.data.success) {
-                    alert('Product Successfully Uploaded');
                     props.history.push('/product-list');
+                    alert('Product Successfully Uploaded');
                 } else {
                     alert('Failed to upload Product');
                 }
@@ -74,14 +74,14 @@ function UploadProductpage(props) {
     return (
         <div>
             <Header/>
-            <div className="row mt-5">
+            <div className="row mt-6">
                 <div className="col-md-6 m-auto">
-                    <div className="card card-body">
-                        <h1 className="text-center mb-3">Upload Product</h1><br/><br/>
+                    <div className="card card-body"><br/><br/>
+                        <h1 className="text-center mb-3">Upload Product Form</h1><br/><br/>
 
                         <form onSubmit={onSubmit}>
 
-                            <FileUpload refreshFunction={updateImages}/><br/><br/>
+                            <ImageUpload refresh={refreshImages}/><br/><br/>
 
                             <div className="form-group">
                                 <input type="text" name="Product_name" value={Product_name} onChange={onProductNameChange}

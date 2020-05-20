@@ -16,37 +16,41 @@ function ProductList(props) {
                 setProducts(response.data.products)
                 console.log(response.data.products)
             } else {
-                alert('Failed to fectch product data')
+                alert('Somthing Wrong...');
             }
         })
 
     }, []);
 
     const onDeleteProduct = (id) => {
-        
+        axios.delete('http://localhost:5000/product/delete-product/'+id)
+           .then(res =>{
+                console.log(res.data);
+                alert('Product Delete Successfully');
+           }); 
     }
 
-    const onEditProduct = () => {
-        
-    }
 
-    const renderCards = Products.map((product, index) => { 
-        console.log(product);
+    const UploadedProduct = Products.map((product, index) => { 
         return <div key={product._id}>
              <div className="card" style={{backgroundColor: 'pink'}}>
                 {<a href={`/product/${product._id}`} >
                     <ProductImageSlider images={product.product_image} /></a>}
 
+                    <div style={{ display: 'flex', height: '50px', justifyContent: 'center', alignItems: 'center' }}>
+                        <p> {product.product_name}</p>
+                    </div>
+                    <div style={{ display: 'flex', height: '50px', justifyContent: 'center', alignItems: 'center' }}>
+                        <p> {`Rs.${product.product_price}/=`}</p>
+                    </div>
                     <div className="col-lg-12">
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <button className="btn btn-outline-success btn-lg btn-block"
-                                    onClick={onEditProduct}>Edit</button>
+                            <Link to={"/edit-product/"+product._id} className="btn btn-outline-success btn-lg btn-block">Edit</Link>
                         </div>
                     </div>
                     <div className="col-lg-12">
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <button className="btn btn-outline-danger btn-lg btn-block "
-                                    onClick={() => {onDeleteProduct(product._id)}}>Delete</button>
+                        <a href="/product-list" className="btn btn-outline-danger btn-lg btn-block" onClick={() => {onDeleteProduct(product._id)}}>Delete</a>
                         </div>
                     </div>                
                 </div> 
@@ -68,7 +72,7 @@ function ProductList(props) {
                                 </div> :
                                 <div className="Content"><br/>
                                     <div className="ProductArea">
-                                        {renderCards}
+                                        {UploadedProduct}
                                     </div>  
                                 </div>
                             }

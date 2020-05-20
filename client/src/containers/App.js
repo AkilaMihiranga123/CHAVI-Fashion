@@ -24,6 +24,8 @@ import EditCategory from './AdminDashboard/ManageCategory/EditCategory';
 
 import UploadProduct from './ProductManagemet/UploadProduct';
 import ProductList from './ProductManagemet/ProductList';
+import ProductDetail from './ProductManagemet/ProductDetail';
+import EditProduct from './ProductManagemet/EditProduct';
 
 import Profile from './Profile/Profile';
 import EditProfile from './Profile/EditProfile';
@@ -60,6 +62,8 @@ function App() {
                         <Route path="/my-account" component={Profile} />
                         <Route path="/update-profile/:id" component={EditProfile} />
                         <Route path="/update-password/:id" component={UpdatePassword} />
+                        <Route path="/product/:productId" component={ProductDetail} />
+                        <Route path="/edit=product/:id" component={EditProduct} />
 
                         <Route path="/"  component={Shop} />
 

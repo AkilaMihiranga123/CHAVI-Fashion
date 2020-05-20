@@ -70,7 +70,6 @@ router.post('/update/:id', (req, res) => {
             category.save()
                     .then(category => {
                         res.status(200).json({
-                            message: 'Category Updated Successfully',
                             data: category
                         });
                     })
@@ -92,7 +91,6 @@ router.get('/:id',(req, res) => {
     Category.findById(req.params.id)
         .then(category => {
             res.status(200).json({
-                message: 'Find The Category',
                 data: category
             });
         })
@@ -108,7 +106,6 @@ router.delete('/:id',(req, res) => {
     Category.findByIdAndDelete(req.params.id)
         .then(category => {
             res.status(200).json({
-                message: 'Category removed Successfully',
                 data: category
             });
         })
