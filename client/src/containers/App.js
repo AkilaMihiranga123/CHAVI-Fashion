@@ -63,7 +63,7 @@ function App() {
                         <Route path="/update-profile/:id" component={EditProfile} />
                         <Route path="/update-password/:id" component={UpdatePassword} />
                         <Route path="/product/:productId" component={ProductDetail} />
-                        <Route path="/edit=product/:id" component={EditProduct} />
+                        <Route path="/edit-product/:id" component={EditProduct} />
 
                         <Route path="/"  component={Shop} />
 
