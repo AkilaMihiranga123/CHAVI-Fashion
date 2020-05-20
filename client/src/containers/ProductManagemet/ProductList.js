@@ -45,7 +45,7 @@ function ProductList(props) {
                     </div>
                     <div className="col-lg-12">
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Link to={"/edit-product/"+product._id} className="btn btn-outline-success btn-lg btn-block">Edit</Link>
+                            <Link to={`/edit-product/${product._id}`} className="btn btn-outline-success btn-lg btn-block">Edit</Link>
                         </div>
                     </div>
                     <div className="col-lg-12">
