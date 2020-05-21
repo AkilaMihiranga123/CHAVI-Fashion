@@ -34,6 +34,8 @@ router.post("/uploadImage", (req, res) => {
 });
 
 
+
+
 router.post("/upload-product", (req, res) => {
 
     const product = new Product(req.body);
@@ -68,6 +70,48 @@ router.delete('/delete-product/:id',(req, res) => {
         });
 });
 
+router.post('/update/:id', (req, res) => {
+    Product.findByIdAndUpdate(req.params.id)
+        .then(product => {
+            product.product_name = req.body.product_name,
+            product.product_slug = req.body.product_slug,
+            product.product_price = req.body.product_price,
+            product.product_description = req.body.product_description,
+            product.product_keyword = req.body.product_keyword,
+            product.category = req.body.category,
+
+            product.save()
+                    .then(product => {
+                        res.status(200).json({
+                            data: product
+                        });
+                    })
+                    .catch(error => {
+                        res.status(400).json({
+                            error: error
+                        });
+                    });
+        })
+        .catch(error => {
+            res.status(400).json({
+                error: error
+            });
+        })
+});
+
+router.get('/edit-page/:id',(req, res) => {
+    Product.findById(req.params.id)
+        .then(product => {
+            res.status(200).json({
+                data: product
+            });
+        })
+        .catch(error => {
+            res.status(400).json({
+                error: error
+            });
+        });
+});
 
 router.get('/product_id', (req, res) => {
     let type = req.query.type
@@ -91,35 +135,6 @@ router.get('/product_id', (req, res) => {
         })
 
    
-});
-
-router.post('/update-product/:id', (req, res) => {
-    Product.findByIdAndUpdate(req.params.id)
-        .then(product => {
-            product.product_name = req.body.product_name,
-            product.product_slug = req.body.product_slug,
-            product.product_price = req.body.product_price,
-            product.product_description = req.body.product_description,
-            product.product_keyword = req.body.product_keyword,
-            product.category = req.body.category
-
-            product.save()
-                    .then(product => {
-                        res.status(200).json({
-                            data: product
-                        });
-                    })
-                    .catch(error => {
-                        res.status(400).json({
-                            error: error
-                        });
-                    });
-        })
-        .catch(error => {
-            res.status(400).json({
-                error: error
-            });
-        })
 });
 
 module.exports = router;

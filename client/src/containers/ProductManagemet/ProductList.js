@@ -3,7 +3,6 @@ import axios from 'axios';
 import Header from "../../components/Header/Header";
 import ProductImageSlider from "./ProductImageSlider";
 import './productDesign.css';
-import { Link } from 'react-router-dom';
 
 function ProductList(props) {
 
@@ -30,6 +29,11 @@ function ProductList(props) {
            }); 
     }
 
+    const onEditProduct = (id) => {
+        console.log(id);
+        props.history.push("/edit-product/"+id);
+    }
+
 
     const UploadedProduct = Products.map((product, index) => { 
         return <div key={product._id}>
@@ -45,7 +49,7 @@ function ProductList(props) {
                     </div>
                     <div className="col-lg-12">
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Link to={`/edit-product/${product._id}`} className="btn btn-outline-success btn-lg btn-block">Edit</Link>
+                        <button className="btn btn-outline-success btn-lg btn-block" onClick={() => {onEditProduct(product._id)}}>Edit</button>
                         </div>
                     </div>
                     <div className="col-lg-12">
