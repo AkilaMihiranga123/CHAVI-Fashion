@@ -8,7 +8,7 @@ const order_schema = mongoose.Schema({
     },
     order:[{
         product: {
-            type: mongoose.Schema.Types.ObjectId, ref: 'Product'
+            type: mongoose.Schema.Types.ObjectId, ref: 'Products'
         },
         price: {
             type: Number,
@@ -19,9 +19,9 @@ const order_schema = mongoose.Schema({
         }
     }],
     address: {
-        type: mongoose.Schema.Types.ObjectId, ref: 'userAddress'
+        type: mongoose.Schema.Types.ObjectId, ref: 'UserAddress'
     },
-    OrderDate: {
+    orderDate: {
         type: Date,
         default: Date.now()
     },
@@ -31,7 +31,7 @@ const order_schema = mongoose.Schema({
     paymentStatus: {
         type: String
     },
-    OrderCompletedStatus: {
+    isOrderCompleted: {
         type: Boolean,
         default: false
     }

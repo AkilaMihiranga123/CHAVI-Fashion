@@ -1,15 +1,15 @@
 const  express = require('express');
 const router =express.Router();
 const mongoose = require('mongoose');
-const order = require('../models/Order');
-const cartItem = require('../models/cartItem');
-const userAddress = require('../models/userAddress');
+const Order = require('../models/Order');
+const CartItem = require('../models/cartItem');
+const UserAddress = require('../models/userAddress');
 
 //create order route
 router.post('/create', (req, res, next) => {
 
     //create new order
-    const order = new order({
+    const order = new Order({
         _id: new mongoose.Types.ObjectId(),
         user: req.body.user,
         order: req.body.order,
@@ -20,7 +20,7 @@ router.post('/create', (req, res, next) => {
 
     //save the order
     order.save().then(order =>{
-        cartItem.remove({"user": req.body.user}).exec().then(doc => {
+        CartItem.remove({"user": req.body.user}).exec().then(doc => {
             res.status(201).json({
                 message: order
             });
@@ -36,19 +36,20 @@ router.post('/create', (req, res, next) => {
     })
 });
 
-router.get('/getorders/:userId', (req, res, next) =>{
-    const userId = req.params.userId;
-    order.find({"user": userId}).select('address order orderDate paymentType paymentStatus OrderCompletedStatus').populate('order.product', 'name productPic').exec().then(orders =>{
-        userAddress.findOne({"user": userId}).exec().then(userAddress =>{
+router.get('/getorders/:user_id', (req, res, next) =>{
+    const user_id = req.params.user_id;
+    order.find({"user": user_id}).select('address order orderDate paymentType paymentStatus isOrderCompleted').populate('order.product', 'product_name product_image').exec().then(orders =>{
+        UserAddress.findOne({"user": user_id}).exec().then(userAddress =>{
             const order_With_Address = orders.map(order => {
+                const address = userAddress.address.find(userAdd => order.address.equals(userAdd._id));
                 return{
                     _id: order._id,
                     order: order.order,
-                    address: order.address,
+                    address: address,
                     orderDate: order.orderDate,
                     paymentType: order.paymentType,
                     paymentStatus: order.paymentStatus,
-                    OrderCompletedStatus: order.OrderCompletedStatus
+                    isOrderComleted: order.isOrderComleted
                 }
             });res.status(200).json({
                 message: order_With_Address
