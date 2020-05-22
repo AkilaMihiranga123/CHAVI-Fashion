@@ -72,23 +72,23 @@ class Orders extends Component {
                         <div className="card card-body">
                             <h1 className="text-center mb-3"><i className="fas fa-user-plus"/>MY ORDER</h1>
                             {
-                                this.state.orderList.map(order => {
+                                this.state.ordersList.map(order => {
                                     return (
                                         <div key={order._id} className="Order">
                                             <div className="OrderHeader">
                                                 <a href="#">{order._id}</a>
                                             </div>
                                             <div className="OrderDescription">
-                                                <div className="od_01">
-                                                    <h2 className="text-left mb-3">Deliver Address</h2>
+                                                <div className="od1">
+                                                    <p className="odtitle">Delivered Address</p>
                                                     <p>{`${order.address.address} ${order.address.cityTownDistrict} ${order.address.state} - ${order.address.pinCode}`}</p>
                                                 </div>
-                                                <div className="od_02">
-                                                    <h2 className="text-left mb-3">Payment Type</h2>
+                                                <div className="od2">
+                                                    <p className="odtitle">Payment Type</p>
                                                     <a className="odp">{order.paymentType}</a>
                                                 </div>
-                                                <div className="od_03">
-                                                    <h2 className="text-left mb-3">Payment Status</h2>
+                                                <div className="od3">
+                                                    <p className="odtitle">Payment Status</p>
                                                     <a className="odp">{order.paymentStatus}</a>
                                                 </div>
 
@@ -100,11 +100,12 @@ class Orders extends Component {
                                                             <img style={{maxWidth: '100%', maxHeight: '100%', position: 'absolute', left: '50%', transform: 'translateX(-50%)'}} src={item.product.productPic[0].img}/>
                                                         </div>
                                                         <div>
-                                                            <h2 className="text-left mb-3">{item.product.name}</h2>
+                                                            <p className="odtitle">{item.product.name}</p>
                                                             <div style={{fontSize: '14px', color: '#555', fontWeight: 'bold'}}>
-                                                                <h2 className="text-left mb-3">Quantity: {item.quantity}</h2>
-                                                                <h2 className="text-left mb-3">${item.price * item.quantity}</h2>
+                                                                <p>Quantity: {item.quantity}</p>
+                                                                <p>${item.price * item.quantity}</p>
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 ))}
