@@ -3,6 +3,7 @@ import Header from "../../components/Header/Header";
 import * as authActions from '../../actions/authActions';
 import {connect} from 'react-redux';
 import {base_url} from "../../constants";
+import './style.css';
 
 class Orders extends Component {
     constructor() {
