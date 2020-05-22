@@ -1,5 +1,6 @@
 import React from "react";
-import './index.css';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const CartPrice = props => {
     return(
@@ -21,6 +22,11 @@ const CartPrice = props => {
                     <div className="Row">
                         <h4>Total Payable</h4>
                         <h4>${props.cart.totalAmount}</h4>
+                    </div>
+                    <div className="col-lg-12">
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <Link to={"/place-order"} className="btn btn-warning btn-lg btn-block"><i className="fas fa-cart-arrow-down"></i>&nbsp;Place Order</Link>
+                        </div>
                     </div>
                 </div>
             </div>

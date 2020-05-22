@@ -1,11 +1,10 @@
 import React, {Component} from "react";
 import Header from '../../components/Header/header';
-import './style.css';
 import CartItem from './CartItem';
 import * as cartAction from '../../actions/cartAction';
 import * as authAction from '../../actions/authActions';
 import {connect} from 'react-redux';
-import cartPrice from '../../components/CartPrice';
+import CartPrice from '../../components/CartPrice';
 
 class Cart extends Component{
     state = {
@@ -34,7 +33,7 @@ class Cart extends Component{
             if(product.quantity <= 0){
                 return;
             }
-            const response = await this.props.updateCart(auth.token, auth.user.userId, product);
+            const response = await this.props.updateCart(auth.token, auth.user.user_id, product);
             if(response.ok === 1){
                 const {cartItems} = this.state;
                 this.setState({
@@ -70,7 +69,8 @@ class Cart extends Component{
             this.props.getToken()
                 .then(result => {
                     if(result) {
-                        const cartItem = this.prop.getCartItems(this.props.auth.token, this.props.auth.user.userId);
+                        const cartItems = this.prop.getCartItems(this.props.auth.token, this.props.auth.user.user_id);
+                        return cartItems;
                     }
                     return [];
                 })
@@ -152,8 +152,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        getCartItems: (token, userId) => dispatch(cartAction.getCartItems(token, userId)),
-        updateCart : (token, userId, product) => dispatch(cartAction.updateCart(token, userId, product)),
+        getCartItems: (token, user_id) => dispatch(cartAction.getCartItems(token, user_id)),
+        updateCart : (token, user_id, product) => dispatch(cartAction.updateCart(token, user_id, product)),
         getToken : () => dispatch(authAction.getToken())
     }
 }

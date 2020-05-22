@@ -7,11 +7,6 @@ import { connect } from 'react-redux';
 
 class BottomHeader extends Component{
 
-    componentDidMount() {
-        this.props.getToken();
-    }
-
-
     render() {
 
         let guestAccount = <ul className="Menu">
