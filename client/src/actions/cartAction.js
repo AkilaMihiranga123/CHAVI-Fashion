@@ -1,5 +1,4 @@
-import {base_url} from "../../";
-import CartItem from "../containers/Cart/CartItem";
+import { base_url } from "../constants/index";
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const GET_CART_DETAILS = 'GET_CART_DETAILS';
@@ -9,86 +8,89 @@ export const CLEAR_CART = 'CLEAR_CART';
 export const addToCart = (token, cartItem) => {
     return async dispatch => {
         try{
-            const response = await fetch(`${base_url}/cart/add`,{
+            const response = await fetch(`${base_url}/cart/add`, {
                 headers: {
-                    'Content-type' : 'application/json',
-                    'auth-token' : token
+                    'Content-Type': 'application/json',
+                    'auth-token': token
                 },
                 body: JSON.stringify(cartItem),
                 method: 'POST'
             });
-            const jsonResponse = await response.json();
+            const jsonResposne = await response.json();
             if(response.status === 201){
                 dispatch({
                     type: ADD_TO_CART,
-                    cartItem : CartItem
+                    cartItem: cartItem
                 });
             }
 
-            return jsonResponse;
-        }catch (error) {
+            return jsonResposne;
+        }catch(error){
             console.log(error);
         }
     }
 }
 
-export const getCartItems = (token, userId) => {
+export const getCartItems = (token, user_id) => {
     return async dispatch => {
-        
+
         try{
-            const response = await fetch(`${base_url}/cart/user/${userId}`,{
+
+            const response = await fetch(`${base_url}/cart/user/${user_id}`, {
                 headers: {
-                    'content-type' : 'application/json',
-                    'auth-token' : token
+                    'Content-Type': 'application/json',
+                    'auth-token': token
                 },
                 method: 'POST'
             });
 
-            const jsonResponse = await response.json();
-            if (response.status === 200){
+            const jsonResposne = await response.json();
+            if(response.status === 200){
                 dispatch({
                     type: GET_CART_DETAILS,
-                    cartItem: jsonResponse.message[0]
+                    cartItems: jsonResposne.message[0]
                 });
             }
 
-            return jsonResponse.message[0];
+            return jsonResposne.message[0];
 
-        }catch (error) {
+        }catch(error){
             console.log(error);
         }
+        
     }
 }
 
-export const updateCart = (token, userId, product) => {
+export const updateCart = (token, user_id, product) => {
     return async dispatch => {
         try{
+
             const response = await fetch(`${base_url}/cart/update/quantity`,{
                 headers: {
-                    'content-type' : 'application/json',
-                    'auth-token' : token
+                    'Content-Type': 'application/json',
+                    'auth-token': token
                 },
-                method : 'PUT',
-                body : JSON.stringify({
-                    userId : userId,
-                    productId : product.productId,
-                    quantity : product.quantity,
-                    total : product.total
+                method: 'PUT',
+                body: JSON.stringify({
+                    user_id: user_id,
+                    productId: product.productId,
+                    quantity: product.quantity,
+                    total: product.total
                 })
             });
+            const jsonResposne = await response.json();
 
-            const jsonresponse = await response.json();
-
-            if (response.status === 201){
+            if(response.status === 201){
                 dispatch({
-                    type : UPDATE_CART,
-                    item : product
+                    type: UPDATE_CART,
+                    item: product
                 });
             }
 
-            return jsonresponse.message;
+            return jsonResposne.message;
 
-        }catch (error) {
+
+        }catch(error){
             console.log(error);
         }
     }
@@ -97,8 +99,8 @@ export const updateCart = (token, userId, product) => {
 export const clearCart = () => {
     return dispatch => {
         dispatch({
-            type : CLEAR_CART,
-            payload : null
+            type: CLEAR_CART,
+            payload: null
         });
     }
 }

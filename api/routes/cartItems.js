@@ -22,7 +22,7 @@ router.post('/add', (req, res, next) => {
                     where = {"user": req.body.user};
                     set = "cart";
                 }
-                cartItem.findOneAndUpdate(where, {
+                CartItem.findOneAndUpdate(where, {
                     [action] : {
                         [set] : {
                             _id: item ? item._id : new mongoose.Types.ObjectId(),
@@ -83,13 +83,13 @@ router.post('/add', (req, res, next) => {
         });
 });
 
-router.post( '/user/:userId', (req, res, next) => {
+router.post( '/user/:user_id', (req, res, next) => {
 
-    const userId = req.params.userId;
+    const user_id = req.params.user_id;
 
-    CartItem.find({user : userId})
+    CartItem.find({user : user_id})
         .select('_id user cart')
-        .populate('cart.product', 'name productPic')
+        .populate('cart.product', 'product_name product_image')
         .exec()
         .then( cartItems => {
             req.status(200).json({
@@ -100,12 +100,12 @@ router.post( '/user/:userId', (req, res, next) => {
 
 router.put('/update/quantity', (req, res, next) => {
 
-    const userId = req.body.userId;
+    const user_id = req.body.user_id;
     const productId = req.res.productId;
     const quantity = req.body.quantity;
     const total = req.body.total;
 
-    CartItem.update({"user" : userId, "cart.product": productId}, {
+    CartItem.update({"user" : user_id, "cart.product": productId}, {
         $set : {
             "cart.$.quantity" : quantity,
             "cart.$.total" : total
