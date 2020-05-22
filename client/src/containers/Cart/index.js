@@ -1,11 +1,11 @@
 import React, {Component} from "react";
-import Header from '../../components/Header/header';
+import Header from '../../components/Header/Header';
 import CartItem from './CartItem';
-import * as cartAction from '../../actions/cartAction';
-import * as authAction from '../../actions/authActions';
+import * as cartActions from '../../actions/cartAction';
+import * as authActions from '../../actions/authActions';
 import {connect} from 'react-redux';
 import CartPrice from '../../components/CartPrice';
-
+import './style.css';
 class Cart extends Component{
     state = {
         cartItems : []
@@ -69,7 +69,7 @@ class Cart extends Component{
             this.props.getToken()
                 .then(result => {
                     if(result) {
-                        const cartItems = this.prop.getCartItems(this.props.auth.token, this.props.auth.user.user_id);
+                        const cartItems = this.props.getCartItems(this.props.auth.token, this.props.auth.user.user_id);
                         return cartItems;
                     }
                     return [];
@@ -102,12 +102,12 @@ class Cart extends Component{
                 <Header/>
                 <div className="Content">
                     <div className="CartWrapper">
-                        <div className="CartDetails">
+                        <div className="card card-body">
                             {/*List Cart Items*/}
                             <div className="CardTitle">
-                                <h3>My Cart</h3>
+                                <h2 className="text-center"><b>MY CART</b></h2>
                             </div>
-                            <div className="CardBody">
+                            <div>
 
                                 {
                                     this.state.cartItems.map(product =>
@@ -125,11 +125,6 @@ class Cart extends Component{
                                             decreaseQuantity={this.decreaseQuantity}
                                         />)
                                 }
-
-                                <div className="PlaceOrder">
-                                    <button className="PlaceOrderButton" onClick={() => this.props.history.push('/place-order')}>Place Order</button>
-                                </div>
-
                             </div>
                         </div>
 
@@ -152,9 +147,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return{
-        getCartItems: (token, user_id) => dispatch(cartAction.getCartItems(token, user_id)),
-        updateCart : (token, user_id, product) => dispatch(cartAction.updateCart(token, user_id, product)),
-        getToken : () => dispatch(authAction.getToken())
+        getCartItems: (token, user_id) => dispatch(cartActions.getCartItems(token, user_id)),
+        updateCart : (token, user_id, product) => dispatch(cartActions.updateCart(token, user_id, product)),
+        getToken : () => dispatch(authActions.getToken())
     }
 }
 

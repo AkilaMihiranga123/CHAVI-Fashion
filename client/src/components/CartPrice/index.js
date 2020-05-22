@@ -1,12 +1,13 @@
 import React from "react";
+import './style.css';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const CartPrice = props => {
     return(
-        <div className="PriceWrapper">
+        <div className="card card-body col-md-4">
             <div className="CardTittle">
-                <h3>Price Details</h3>
+            <h2 className="text-center"><b>PRICE DETAILS</b></h2><hr/>
             </div>
             <div className="CardBody">
                 <div className="FinalBilling">
@@ -20,14 +21,15 @@ const CartPrice = props => {
                     </div>
                     <hr />
                     <div className="Row">
-                        <h4>Total Payable</h4>
-                        <h4>${props.cart.totalAmount}</h4>
-                    </div>
+                        <h4><b>Total Payable</b></h4>
+                        <h4><b>${props.cart.totalAmount}</b></h4>
+                    </div><hr/>
+                    <br/><br/>
                     <div className="col-lg-12">
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
                             <Link to={"/place-order"} className="btn btn-warning btn-lg btn-block"><i className="fas fa-cart-arrow-down"></i>&nbsp;Place Order</Link>
                         </div>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>

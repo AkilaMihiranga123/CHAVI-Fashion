@@ -30,9 +30,12 @@ import EditProduct from './ProductManagemet/EditProduct';
 import Profile from './Profile/Profile';
 import EditProfile from './Profile/EditProfile';
 import UpdatePassword from './Profile/UpdatePassword';
+import Cart from './Cart/index';
+import cartReducers from '../reducers/cartReducers';
 
 const rootReducers = combineReducers({
-    auth: authReducers
+    auth: authReducers,
+    cart: cartReducers
 });
 
 const store = createStore(rootReducers, applyMiddleware(thunk));
@@ -43,6 +46,7 @@ function App() {
             <Router>
                 <div className="App">
                     <Switch>
+                        <Route path="/admin-dashboard"  component={Admin} />
                         <Route path="/login" component={Login} />
                         <Route path="/signup" component={Signup} />
                         <Route path="/users-list" component={UserList} />
@@ -64,10 +68,12 @@ function App() {
                         <Route path="/update-password/:id" component={UpdatePassword} />
                         <Route path="/product/:productId" component={ProductDetail} />
                         <Route path="/edit-product/:id" component={EditProduct} />
+                        <Route path="/cart" component={Cart} />
 
+                        
                         <Route path="/"  component={Shop} />
 
-                        <Route path="/admin-dashboard"  component={Admin} />
+                        
                         <Route path="/store-manager-dashboard"  component={StoreManager} />
 
                     </Switch>
