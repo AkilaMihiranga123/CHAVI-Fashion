@@ -160,7 +160,7 @@ export default class EditProduct extends Component {
                                 <br/><br/>
                                 
                                 <button type="submit" className="btn btn-warning btn-block">Update Product</button><br/>
-                                <a href="/category-list" className="btn btn-danger btn-block">Cancel</a>
+                                <a href="/product-list" className="btn btn-danger btn-block">Cancel</a>
                                 <br/><br/>
                             </form>
                             </div>

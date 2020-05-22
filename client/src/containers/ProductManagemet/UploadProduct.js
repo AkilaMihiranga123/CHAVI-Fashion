@@ -1,18 +1,31 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Header from "../../components/Header/Header";
 import ImageUpload from "./ImageUpload";
 
+
 function UploadProductpage(props) {
+
+     const[Category,setCategory] = useState(1);
+     const[CategoryValue, setCategoryValue] = useState([]);
 
      const [Product_name, setProduct_name] = useState("");
      const [Product_slug, setProduct_slug] = useState("");
-     const [Product_price, setProduct_price] = useState();
+     const [Product_price, setProduct_price] = useState("");
      const [Product_description, setProduct_description] = useState("");
      const [Product_keyword, setProduct_keyword] = useState("");
-     const [Category, setCategory] = useState("");
  
      const [Product_image, setProduct_image] = useState([]);
+
+     useEffect(() => {
+        axios.get('http://localhost:5000/category/')
+            .then(response => {
+                console.log(response.data.data);
+                setCategoryValue(response.data.data)
+            })
+
+    }, []);
+ 
  
      const onProductNameChange = (event) => {
         setProduct_name(event.currentTarget.value);
@@ -104,10 +117,12 @@ function UploadProductpage(props) {
                                     className="form-control" placeholder="Enter Keyword"/>
                             </div>
                             <div className="form-group">
-                                <input type="text" name="Category" value={Category} onChange={onProductCategoryChange}
-                                    className="form-control" placeholder="Enter Category"/>
+                                <select onChange={onProductCategoryChange} name="Category" className="form-control" placeholder="Enter Category">
+                                    {CategoryValue.map(item => (
+                                        <option key={item._id} value={item.category_name}>{item.category_name}</option>
+                                    ))}
+                                </select>
                             </div>
-                
                             <br/><br/>
                             <button type="submit" className="btn btn-warning btn-block">Add Product</button><br/>
                             <a href="/product-list" className="btn btn-danger btn-block">Cancel</a>
