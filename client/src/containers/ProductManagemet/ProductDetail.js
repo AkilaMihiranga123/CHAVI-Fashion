@@ -15,6 +15,24 @@ class ProductDetail extends Component{
     
     componentDidMount() {
 
+        if(!this.props.auth.isAuthenticated){
+            this.props.getToken()
+            .then(result => {
+                if(result){
+                    this.props.getCartItems(this.props.auth.token, this.props.auth.user.user_id)
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
+
         const id = this.props.match.params.productId;
         axios.get(`http://localhost:5000/product/product_id?id=${id}&type=single`)//get product details using product id
             .then(response => {
@@ -28,6 +46,32 @@ class ProductDetail extends Component{
 
     }
 
+    addToCart = (productId, price, name, image) => {
+
+        if(!this.props.auth.isAuthenticated){
+            this.props.history.push('/login');
+            return;
+        }
+
+        const { auth } = this.props;
+        const cartItem = {
+            user: auth.user.user_id,
+            product: productId,
+            name: name,
+            image: image,
+            quantity: 1,
+            price: price
+        }
+        console.log(cartItem);
+        this.props.addToCart(auth.token, cartItem)
+        .then(response => {
+            //console.log(response);
+            console.log(this.props.cart);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
 
     render() {
         
@@ -58,7 +102,7 @@ class ProductDetail extends Component{
                                         </div>
                                         <div className="col-lg-12">
                                             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                            <Link to={"/path/"+this.state.product._id} className="btn btn-outline-warning btn-lg btn-block">Add Cart</Link>
+                                            <button className="btn btn-outline-warning btn-lg btn-block" onClick={() => { this.addToCart(this.state.product._id, this.state.product.product_price, this.state.product.product_name, this.state.product.product_image[0]) }}><i className="fas fa-shopping-cart"></i>&nbsp;ADD TO CART</button>
                                             </div>
                                         </div>     
                                         
@@ -75,4 +119,19 @@ class ProductDetail extends Component{
 }
 
 
-export default ProductDetail;
+const mapStateToProps = state => {
+    return {
+        auth: state.auth,
+        cart: state.cart
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addToCart: (token, cartItem) => dispatch(cartActions.addToCart(token, cartItem)),
+        getCartItems: (token, user_id) => dispatch(cartActions.getCartItems(token, user_id)),
+        getToken: () => dispatch(authActions.getToken())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
