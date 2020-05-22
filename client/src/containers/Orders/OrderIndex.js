@@ -80,15 +80,15 @@ class Orders extends Component {
                                             </div>
                                             <div className="OrderDescription">
                                                 <div className="od1">
-                                                    <p className="odtitle">Delivered Address</p>
+                                                    <p className="odTitle">Delivered Address</p>
                                                     <p>{`${order.address.address} ${order.address.cityTownDistrict} ${order.address.state} - ${order.address.pinCode}`}</p>
                                                 </div>
                                                 <div className="od2">
-                                                    <p className="odtitle">Payment Type</p>
+                                                    <p className="odTitle">Payment Type</p>
                                                     <a className="odp">{order.paymentType}</a>
                                                 </div>
                                                 <div className="od3">
-                                                    <p className="odtitle">Payment Status</p>
+                                                    <p className="odTitle">Payment Status</p>
                                                     <a className="odp">{order.paymentStatus}</a>
                                                 </div>
 
@@ -100,7 +100,7 @@ class Orders extends Component {
                                                             <img style={{maxWidth: '100%', maxHeight: '100%', position: 'absolute', left: '50%', transform: 'translateX(-50%)'}} src={item.product.productPic[0].img}/>
                                                         </div>
                                                         <div>
-                                                            <p className="odtitle">{item.product.name}</p>
+                                                            <p className="odTitle">{item.product.name}</p>
                                                             <div style={{fontSize: '14px', color: '#555', fontWeight: 'bold'}}>
                                                                 <p>Quantity: {item.quantity}</p>
                                                                 <p>${item.price * item.quantity}</p>
