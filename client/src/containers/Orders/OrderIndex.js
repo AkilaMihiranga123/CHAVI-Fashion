@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import Header from "../../components/Header/Header";
 import * as authActions from '../../actions/authActions';
 import {connect} from 'react-redux';
-import {base_url} from "../../constants";
+import {base_url} from "../../constants//index";
 import './style.css';
 
 class Orders extends Component {
@@ -33,7 +33,8 @@ class Orders extends Component {
         const user_id = this.props.auth.user.user_id;
         fetch(`${base_url}/order/getorders/${user_id}`, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'auth-token': token
             }
         })
             .then(response => response.json())
@@ -49,12 +50,12 @@ class Orders extends Component {
     };
 
     getTotalOrder = (id) => {
-        const  oneOrder = this.state.ordersList.find(this.order._id===id);
-        let totalOrder = 0;
-        oneOrder.order.forEach(order => {
-            totalOrder = totalOrder + (order.price*order.quantity)
+        const singleOrder = this.state.ordersList.find(order => order._id === id);
+        let orderTotal = 0;
+        singleOrder.order.forEach(order => {
+            orderTotal = orderTotal + (order.price * order.quantity)
         });
-        return totalOrder;
+        return orderTotal;
     };
 
     dateFormat = (date) => {
@@ -68,35 +69,35 @@ class Orders extends Component {
                 <Header />
                 
                     <div className="Content">
-                        <div className="Card">
-                            <h1 className="text-center mb-3">MY ORDERS</h1>
+                        <div className="card card-body">
+                            <h1 className="text-center"><b>MY ORDERS</b></h1>
                             {
                                 this.state.ordersList.map(order => {
                                     return (
                                         <div key={order._id} className="Order">
                                             <div className="OrderHeader">
-                                                <a href="#">{order._id}</a>
+                                                <a href="/orders">{order._id}</a>
                                             </div>
                                             <div className="OrderDescription">
                                                 <div className="od1">
                                                     <p className="odTitle">Delivered Address</p>
-                                                    <p>{`${order.address.address} ${order.address.cityTownDistrict} ${order.address.state} - ${order.address.pinCode}`}</p>
+                                                    <p>{`${order.address.address} ${order.address.cityDistrictTown} ${order.address.state} - ${order.address.pinCode}`}</p>
                                                 </div>
                                                 <div className="od2">
                                                     <p className="odTitle">Payment Type</p>
-                                                    <a className="odp">{order.paymentType}</a>
+                                                    <p className="odp">{order.paymentType}</p>
                                                 </div>
                                                 <div className="od3">
                                                     <p className="odTitle">Payment Status</p>
-                                                    <a className="odp">{order.paymentStatus}</a>
+                                                    <p className="odp">{order.paymentStatus}</p>
                                                 </div>
 
                                             </div>
                                             <div>
                                                 {order.order.map(item => (
                                                     <div key={item._id} style={{display: 'flex', alignItems: 'center', margin: '5px 0', borderBottom: '1px solid #cecece'}}>
-                                                        <div style={{width: '80px', height: '80px', overflow: 'hidden', position: 'relative'}} className="ImageContainer">
-                                                            <img style={{maxWidth: '100%', maxHeight: '100%', position: 'absolute', left: '50%', transform: 'translateX(-50%)'}} src={item.product.productPic[0].img}/>
+                                                        <div style={{width: '100px', height: '100px', overflow: 'hidden', position: 'relative'}} className="ImageContainer">
+                                                            <img style={{maxWidth: '100%', maxHeight: '100%', position: 'absolute', left: '50%', transform: 'translateX(-50%)'}} src={`http://localhost:5000/${item.product.product_image}`} alt="ordered_product"/>
                                                         </div>
                                                         <div>
                                                             <p className="odTitle">{item.product.name}</p>
@@ -111,7 +112,7 @@ class Orders extends Component {
                                             </div>
                                             <div className="OrderFooter">
                                                 <p>Ordered On <span>{this.dateFormat(order.orderDate)}</span></p>
-                                                <p>Order Total <span>${this.getTotalOrder(order._id)}</span></p>
+                                                <p><b>Order Total <span>${this.getTotalOrder(order._id)}</span></b></p>
                                             </div>
                                         </div>
                                     )

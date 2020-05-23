@@ -36,10 +36,16 @@ router.post('/create', (req, res, next) => {
     })
 });
 
-router.post('/getorders/:user_id', (req, res, next) =>{
+router.get('/getorders/:user_id', (req, res, next) =>{
     const user_id = req.params.user_id;
-    Order.find({"user": user_id}).select('_id address order orderDate paymentType paymentStatus isOrderCompleted').populate('order.product', 'product_name product_image').exec().then(orders =>{
-        UserAddress.findOne({"user": user_id}).exec().then(userAddress =>{
+    Order.find({"user": user_id})
+    .select('address user order orderDate paymentType paymentStatus isOrderCompleted')
+    .populate('order.product', 'product_name product_image')
+    .exec()
+    .then(orders =>{
+        UserAddress.findOne({"user": user_id})
+        .exec()
+        .then(userAddress =>{
             const order_With_Address = orders.map(order => {
                 const address = userAddress.address.find(userAdd => order.address.equals(userAdd._id));
                 return{
@@ -51,15 +57,18 @@ router.post('/getorders/:user_id', (req, res, next) =>{
                     paymentStatus: order.paymentStatus,
                     isOrderCompleted: order.isOrderCompleted
                 }
-            });res.status(200).json({
+            });
+            res.status(200).json({
                 message: order_With_Address
             });
-        }).catch(error => {
+        })
+        .catch(error => {
             return res.status(500).json({
                 error:error
             })
         })
-    }).catch(error => {
+    })
+    .catch(error => {
         res.status(500).json({
             error:error
         });

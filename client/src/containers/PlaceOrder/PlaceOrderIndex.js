@@ -8,7 +8,7 @@ import CartPrice from '../../components/CartPrice/index';
 import DeliveryAddress from './DeliveryAddress/DeliveryAddressIndex';
 import RadioButton from '../../components/UI/RadioButton';
 import * as cartActions from '../../actions/cartAction';
-import { base_url } from '../../constants';
+import { base_url } from '../../constants/index';
 
 class PlaceOrder extends Component{
 
@@ -61,8 +61,8 @@ class PlaceOrder extends Component{
     }
 
     getAddresses = () => {
-        const userId = this.props.auth.user.userId;
-        fetch(`${base_url}/user/get-addresses/`+userId, {
+        const user_id = this.props.auth.user.user_id;
+        fetch(`${base_url}/user/get-addresses/`+user_id, {
             headers: {
                 'auth-token': this.props.auth.token
             }
@@ -119,7 +119,7 @@ class PlaceOrder extends Component{
         console.log(this.state.address)
 
         const address = {
-            userId: this.props.auth.user.userId,
+            user_id: this.props.auth.user.user_id,
             address: this.state.address
         }
 
@@ -201,7 +201,7 @@ class PlaceOrder extends Component{
                     'auth-token': this.props.auth.token
                 },
                 body: JSON.stringify({
-                    user: this.props.auth.user.userId,
+                    user: this.props.auth.user.user_id,
                     address: this.state.selectedAddress,
                     order: order,
                     paymentType: 'COD',
