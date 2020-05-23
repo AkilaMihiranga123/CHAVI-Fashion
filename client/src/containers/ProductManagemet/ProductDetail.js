@@ -10,11 +10,46 @@ class ProductDetail extends Component{
 
     constructor(props) {
         super(props);
+        
+
+        this.onChangeWriter = this.onChangeWriter.bind(this);
+        this.onChangeComment = this.onChangeComment.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            product: []
+            product: [],
+            Comments: [],
+            product_id: '',
+            writer: '',
+            comment: ''
         }
     }
+    onChangeWriter(e) {
+        this.setState({
+            writer: e.target.value
+        });
+    }
+
+    onChangeComment(e) {
+        this.setState({
+            comment: e.target.value
+        });
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+        const comments = {
+            postId: this.props.match.params.productId,
+            writer: this.state.writer,
+            comment: this.state.comment
+        }
+
+        axios.post('http://localhost:5000/comment/saveComment', comments)
+            .then(res => console.log(res.data));
+
+        window.location = '/product/'+this.props.match.params.productId;
+    }
+
     
     componentDidMount() {
 
@@ -46,6 +81,17 @@ class ProductDetail extends Component{
             .catch(function (error) {
                 console.log(error);
             });
+
+        axios.get('http://localhost:5000/comment/get-comment')
+        .then(response => {
+            this.setState({
+                Comments: response.data.data.filter(el => el.postId === id)
+            })
+            console.log(this.state.Comments);
+        })
+        .catch((error => {
+            console.log(error);
+        }))
 
     }
 
@@ -114,15 +160,36 @@ class ProductDetail extends Component{
                                 </div>
                                 <div className="col-md-5 lg-2">
                                 <div className="card card-body"><br/><br/>
-                                    <h1 className="text-center"> Add Your Comments ... </h1><hr/>
-                                     
+                                    <h2 className="text-center"> Add Your Comments ... </h2><hr/>
+                                     <form onSubmit={this.onSubmit} autoComplete="off">
+                                        <div className="form-group">
+                                            <input type="text" name="writer" value={this.state.writer} onChange={this.onChangeWriter}
+                                                className="form-control" placeholder="Enter Your Name"/>
+                                        </div>
+                                        <div className="form-group">
+                                            <input type="text" name="comment" value={this.state.comment} onChange={this.onChangeComment}
+                                                className="form-control" placeholder="Enter Your Comment"/>
+                                        </div>
+                            
+                                        <br/>
+                                        <button type="submit" className="btn btn-warning btn-block">Add Comment</button>
+                                        <a href="" className="btn btn-danger btn-block">Cancel</a>
+
+                                     </form>
                                      </div>
                                 </div>
 
                                <div className="col-md-6 lg-2">
                                <div className="card card-body" style={{backgroundColor: '#FFF0F5'}}><br/><br/>
-                                     <h1 className="text-center"> Comments List  </h1><hr/>
-                                         
+                                     <h2 className="text-center"> Comments List  </h2><hr/>
+                                         {this.state.Comments.map(comment => (
+                                             <div key={comment._id}>
+                                                 <div className="card card-body"><br/>
+                                                 <h3><i class="fa fa-commenting" aria-hidden="true"></i> {comment.writer} </h3>
+                                                    <h6> Comment : {comment.comment}</h6>
+                                                 </div>
+                                             </div>
+                                         ))}
                                 </div>
                                 </div>   
                             </div>
