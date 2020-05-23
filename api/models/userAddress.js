@@ -27,15 +27,15 @@ const userAddressSchea = mongoose.Schema({
             type:String,
             required: true
         },
-        cityTownDistrict: {
+        cityDistrictTown: {
             type: String,
             required: true
         },
-        status: {
+        state: {
             type:String,
             required: true
         },
-        landMark: {
+        landmark: {
             type: String
         },
         alternatePhoneNumber: {
@@ -44,4 +44,6 @@ const userAddressSchea = mongoose.Schema({
     }]
 });
 
-module.exports = mongoose.model('userAddress', userAddressSchea);
+const UserAddress = mongoose.model('UserAddress', userAddressSchea);
+
+module.exports = UserAddress;

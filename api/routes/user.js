@@ -5,6 +5,8 @@ const bcrypt = require('bcrypt');
 const jsonWebToken = require('jsonwebtoken');
 const User = require('../models/User');
 const authenticate  = require('../middleware/authenticate');
+const mongoose = require('mongoose');
+const UserAddress = require('../models/userAddress');
 
 //get all users
 router.get('/',(req,res) => {
@@ -267,6 +269,72 @@ router.post('/update-password/:id', (req, res) => {
                     message: 'User ID not exists'
             });
         })
+});
+
+//create new user address
+router.post('/new-address', (req, res, next) => {
+
+    UserAddress.findOne({"user": req.body.user_id})
+    .exec()
+    .then(user => {
+
+        if(user){
+
+            UserAddress.findOneAndUpdate({"user": req.body.user_id}, {
+                $push: {
+                    "address": req.body.address
+                }
+            }, {
+                new: true
+            })
+            .then(doc => {
+                res.status(201).json({
+                    message: doc
+                });
+            });
+
+        }else{
+
+            const userAddress = new UserAddress({
+                _id: new mongoose.Types.ObjectId(),
+                user: req.body.user_id,
+                address: req.body.address
+            });
+
+            userAddress.save()
+            .then(doc => {
+                res.status(201).json({
+                    message: doc
+                });
+            })
+            .catch(error => {
+                res.status(500).json({
+                    error: error
+                });
+            })
+
+        }
+
+    });
+
+});
+
+router.get('/get-addresses/:user_id', (req, res, next) => {
+
+    UserAddress.findOne({"user": req.params.user_id})
+    .select('_id user address')
+    .exec()
+    .then(user => {
+        res.status(200).json({
+            message: user
+        })
+    })
+    .catch(error => {
+        res.status(500).json({
+            error: error
+        })
+    })
+
 });
 
 module.exports = router;

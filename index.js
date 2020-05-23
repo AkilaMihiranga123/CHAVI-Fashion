@@ -18,6 +18,7 @@ const categoryRoutes = require('./api/routes/categories');
 const ProductRoutes = require('./api/routes/product');
 const emailRoutes = require('./api/routes/email');
 const cartItemRoutes = require('./api/routes/cartItems');
+const orderRoutes = require('./api/routes/orders');
 
 const commentRoutes = require('./api/routes/comment');
 
@@ -34,6 +35,7 @@ app.use('/comment', commentRoutes);
 app.use('/uploads', express.static('uploads'));
 app.use('/email', emailRoutes);
 app.use('/cart', cartItemRoutes);
+app.use('/order', orderRoutes);
 
 //Connect DB
 mongoose.connect(process.env.MongoDB_CONNECTION,{ useCreateIndex:true, useNewUrlParser: true, useUnifiedTopology: true }, () =>
