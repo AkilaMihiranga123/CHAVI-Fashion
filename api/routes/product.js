@@ -48,27 +48,12 @@ router.post("/upload-product", (req, res) => {
 });
 
 router.post('/get-products',(req,res) => {
-    
-    let term = req.body.searchTerm;
-
-    if (term) {
-        Product.find()
-            .find({ $text: { $search: term } })
-            
+        Product.find()  
             .exec((err, products) => {
                 if (err) return res.status(400).json({ success: false, err })
-                res.status(200).json({ success: true, products, postSize: products.length })//success msg and sebd all products info
+                res.status(200).json({ success: true, products, postSize: products.length })
             })
-    } else {
-        Product.find()
-            
-            .exec((err, products) => {
-                if (err) return res.status(400).json({ success: false, err })
-                res.status(200).json({ success: true, products, postSize: products.length })//success msg and sebd all products info
-            })
-    }
 });
-
 
 router.delete('/delete-product/:id',(req, res) => {
     Product.findByIdAndDelete(req.params.id)
@@ -131,7 +116,6 @@ router.get('/product_id', (req, res) => {
     let type = req.query.type
     let productIds = req.query.id
 
-
     if (type === "array") {
         let ids = req.query.id.split(',');
         productIds = [];
@@ -140,8 +124,6 @@ router.get('/product_id', (req, res) => {
         })
     }
 
-
-    //we need to find the product information that belong to product Id 
     Product.find({ '_id': { $in: productIds } })
         .exec((err, product) => {
             if (err) return res.status(400).send(err)
