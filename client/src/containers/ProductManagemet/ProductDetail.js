@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as cartActions from '../../actions/cartAction';
 import * as authActions from '../../actions/authActions';
+import Footer from '../../components/Footer/index';
 class ProductDetail extends Component{
 
     constructor(props) {
@@ -195,7 +196,8 @@ class ProductDetail extends Component{
                             </div>
                         </div>
                     </div>    
-                </div>
+                </div><br/><br/><br/>
+                <Footer />
             </div>
         )
     }

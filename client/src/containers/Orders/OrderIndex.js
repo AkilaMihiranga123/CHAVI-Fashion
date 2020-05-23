@@ -2,8 +2,9 @@ import React, {Component} from "react"
 import Header from "../../components/Header/Header";
 import * as authActions from '../../actions/authActions';
 import {connect} from 'react-redux';
-import {base_url} from "../../constants//index";
+import {base_url} from "../../constants/index";
 import './style.css';
+import Footer from '../../components/Footer/index';
 
 class Orders extends Component {
     
@@ -85,11 +86,11 @@ class Orders extends Component {
                                                 </div>
                                                 <div className="od2">
                                                     <p className="odTitle">Payment Type</p>
-                                                    <p className="odp">{order.paymentType}</p>
+                                                    <p className="odp1">{order.paymentType}</p>
                                                 </div>
                                                 <div className="od3">
                                                     <p className="odTitle">Payment Status</p>
-                                                    <p className="odp">{order.paymentStatus}</p>
+                                                    <p className="odp2">{order.paymentStatus}</p>
                                                 </div>
 
                                             </div>
@@ -103,7 +104,7 @@ class Orders extends Component {
                                                             <p className="odTitle">{item.product.name}</p>
                                                             <div style={{fontSize: '14px', color: '#555', fontWeight: 'bold'}}>
                                                                 <p>Quantity: {item.quantity}</p>
-                                                                <p>${item.price * item.quantity}</p>
+                                                                <p>Rs. {item.price * item.quantity}</p>
                                                             </div>
 
                                                         </div>
@@ -112,15 +113,15 @@ class Orders extends Component {
                                             </div>
                                             <div className="OrderFooter">
                                                 <p>Ordered On <span>{this.dateFormat(order.orderDate)}</span></p>
-                                                <p><b>Order Total <span>${this.getTotalOrder(order._id)}</span></b></p>
+                                                <p><b>Order Total <span>Rs. {this.getTotalOrder(order._id)}</span></b></p>
                                             </div>
                                         </div>
                                     )
                                 })
                             }
                         </div>
-                    </div>
-            
+                    </div><br/><br/><br/>
+                    <Footer />
             </React.Fragment>
         );
     }

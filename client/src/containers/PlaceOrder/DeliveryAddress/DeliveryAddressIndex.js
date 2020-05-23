@@ -7,8 +7,8 @@ const DeliveryAddress = props => {
     const {address} = props;
 
     return (
-        <div className="row mt-5">
-            <div className="col-md-4 m-auto">
+        <div style={{margin: '10px 0'}}>
+            
                 <div className="card card-body">
                     <div className="AddressSelection" key={address._id}>
                         <RadioButton
@@ -23,7 +23,7 @@ const DeliveryAddress = props => {
                         </div>
                     </div>
                 </div>
-            </div>
+            
         </div>
     );
 }

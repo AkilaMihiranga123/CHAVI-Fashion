@@ -13,16 +13,16 @@ const CartPrice = props => {
                 <div className="FinalBilling">
                     <div className="Row">
                         <p>Price ({props.cart.cartCount})</p>
-                        <p>${props.cart.totalAmount}</p>
+                        <p>Rs. {props.cart.totalAmount}</p>
                     </div>
                     <div className="Row">
                         <p>Delivery</p>
-                        <p>$0</p>
+                        <p>Rs. 0</p>
                     </div>
                     <hr />
                     <div className="Row">
                         <h4><b>Total Payable</b></h4>
-                        <h4><b>${props.cart.totalAmount}</b></h4>
+                        <h4><b>Rs. {props.cart.totalAmount}</b></h4>
                     </div><hr/>
                     <br/><br/>
                     <div className="col-lg-12">

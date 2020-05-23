@@ -60,7 +60,7 @@ export default class AdminsList extends Component{
         return (
             <div>
                 <Header/>
-                <div className="row mt-5">
+                <div className="mt-5">
                     <div className="col-md-10 m-auto">
                         <div className="card card-body">
                             <h1><a className="btn btn-primary" href="/add-admin"><i className="fa fa-plus"></i> ADD NEW ADMIN</a></h1>

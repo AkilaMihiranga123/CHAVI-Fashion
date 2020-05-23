@@ -6,6 +6,7 @@ import * as authActions from '../../actions/authActions';
 import {connect} from 'react-redux';
 import CartPrice from '../../components/CartPrice';
 import './style.css';
+import Footer from '../../components/Footer/index';
 class Cart extends Component{
     state = {
         cartItems : []
@@ -131,7 +132,8 @@ class Cart extends Component{
                         <CartPrice/>
 
                     </div>
-                </div>
+                </div><br/><br/><br/>
+                <Footer />
 
             </React.Fragment>
         );

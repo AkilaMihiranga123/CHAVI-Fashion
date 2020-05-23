@@ -104,7 +104,7 @@ const AddressForm = props =>  {
                         </div>
 
                         <div className="Row">
-                            <button className="DeliveryAddressButton">SAVE AND DELIVER</button>
+                            <button className="btn btn-warning"><i class="fas fa-truck"></i>&nbsp;SAVE AND DELIVER</button>
                         </div>
 
                     </form>

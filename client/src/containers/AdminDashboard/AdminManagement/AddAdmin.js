@@ -146,7 +146,7 @@ export default class AddAdmin extends Component {
         return (
             <div>
                 <Header/>
-                <div className="row mt-5">
+                <div className="mt-5">
                     <div className="col-md-4 m-auto">
                         <div className="card card-body">
                             <h1 className="text-center mb-3">ADD NEW ADDMIN</h1>

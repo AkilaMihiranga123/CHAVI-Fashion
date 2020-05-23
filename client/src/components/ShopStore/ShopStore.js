@@ -3,6 +3,7 @@ import Products from './Products/Products';
 import { Route, Switch } from 'react-router-dom';
 import Header from '../Header/Header';
 import Slideshow from '../SlideShow/Slide';
+import Footer from '../Footer/index';
 
 
 class ShopStore extends Component{
@@ -16,8 +17,8 @@ class ShopStore extends Component{
                 <Slideshow />
                 <Switch>
                     <Route path="/" exact component={Products} />
-                </Switch>
-
+                </Switch><br/><br/><br/>
+                <Footer />
             </React.Fragment>
 
         );

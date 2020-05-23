@@ -9,6 +9,7 @@ import DeliveryAddress from './DeliveryAddress/DeliveryAddressIndex';
 import RadioButton from '../../components/UI/RadioButton';
 import * as cartActions from '../../actions/cartAction';
 import { base_url } from '../../constants/index';
+import Footer from '../../components/Footer/index';
 
 class PlaceOrder extends Component{
 
@@ -273,7 +274,7 @@ class PlaceOrder extends Component{
                                     {
                                         this.state.existingAddress ?
                                         <div className="DeliveryButtonContainer" >
-                                            <button onClick={this.confirmDeliveryAddress} className="DeliveryAddressButton">Deliver Here</button>
+                                            <button onClick={this.confirmDeliveryAddress} className="btn btn-warning"><i class="fas fa-truck"></i>&nbsp; Deliver Here</button>
                                         </div> : null
                                     }
                                     
@@ -315,17 +316,17 @@ class PlaceOrder extends Component{
                                             this.props.cart.cartItem.map(item => (
                                                 <div key={item.product} style={{display: 'flex', margin: '5px 0', alignItems: 'center'}}>
                                                     <div style={{width: '60px', height: '60px', overflow: 'hidden', position: 'relative'}}>
-                                                        <img style={{maxWidth: '100%', maxHeight: '100%', position: 'absolute', left: '50%', transform: 'translateX(-50%)'}} src={item.image} alt="" />
+                                                        <img style={{maxWidth: '100%', maxHeight: '100%', position: 'absolute', left: '50%', transform: 'translateX(-50%)'}} src={`http://localhost:5000/${item.image}`} alt="" />
                                                     </div>
                                                     <div>
                                                         <h5>{item.name}</h5>
                                                         <h6>Quantity : {item.quantity}</h6>
-                                                        <h6>${item.total}</h6>
+                                                        <h6>Rs. {item.total}</h6>
                                                     </div>
                                                 </div>
                                             ))
                                         }
-                                        <button onClick={this.confirmOrder} className="ContinueButton">Continue</button>
+                                        <button onClick={this.confirmOrder} className="btn btn-warning">Continue</button>
                                     </div>
                                  : null
                                 }
@@ -352,7 +353,7 @@ class PlaceOrder extends Component{
                                         this.state.selectedPaymentType !== 'cod' ? 
                                         <p className="ErrorMessage">Sorry, Only Cash on Delivery is available</p> : null
                                     }
-                                    <button className="PaymentConfirm" onClick={this.submitOrder}>Confirm Order</button>
+                                    <button className="btn btn-warning" onClick={this.submitOrder}>Confirm Order</button>
 
                                 </div> : null
                                 }
@@ -374,8 +375,8 @@ class PlaceOrder extends Component{
 
                     
                    
-                </div>
-                
+                </div><br/><br/><br/>
+                <Footer />
             </React.Fragment>
         );
     }

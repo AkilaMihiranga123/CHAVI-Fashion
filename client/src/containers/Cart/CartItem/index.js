@@ -12,7 +12,7 @@ const CartItem = props => {
                 </div>
                 <div className="ItemDetails">
                     <p className="ItemName">{props.name}</p>
-                    <p className="ItemPrice">{props.total}</p>
+                    <p className="ItemPrice">Rs. {props.total}</p>
                 </div>
             </div>
             <div className="CartActionButtons">
