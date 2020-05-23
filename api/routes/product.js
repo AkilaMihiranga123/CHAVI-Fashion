@@ -48,13 +48,27 @@ router.post("/upload-product", (req, res) => {
 });
 
 router.post('/get-products',(req,res) => {
-    Product.find()
-        .exec((error, products) => {
-            if(error) return res.status(400).json({ success: false, error})
+    
+    let term = req.body.searchTerm;
 
-            res.status(200).json({ success: true, products})
-        })
+    if (term) {
+        Product.find()
+            .find({ $text: { $search: term } })
+            
+            .exec((err, products) => {
+                if (err) return res.status(400).json({ success: false, err })
+                res.status(200).json({ success: true, products, postSize: products.length })//success msg and sebd all products info
+            })
+    } else {
+        Product.find()
+            
+            .exec((err, products) => {
+                if (err) return res.status(400).json({ success: false, err })
+                res.status(200).json({ success: true, products, postSize: products.length })//success msg and sebd all products info
+            })
+    }
 });
+
 
 router.delete('/delete-product/:id',(req, res) => {
     Product.findByIdAndDelete(req.params.id)

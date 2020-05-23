@@ -19,12 +19,17 @@ const ProductRoutes = require('./api/routes/product');
 const emailRoutes = require('./api/routes/email');
 const cartItemRoutes = require('./api/routes/cartItems');
 
+const commentRoutes = require('./api/routes/comment');
+
+
 //use imported routes
 app.use('/user', userRoutes);
 app.use('/admin', adminRoutes);
 app.use('/storeManager', storeManagerRoutes);
 app.use('/category', categoryRoutes);
 app.use('/product', ProductRoutes);
+app.use('/comment', commentRoutes);
+
 
 app.use('/uploads', express.static('uploads'));
 app.use('/email', emailRoutes);

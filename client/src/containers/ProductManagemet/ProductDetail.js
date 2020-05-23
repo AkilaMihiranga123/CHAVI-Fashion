@@ -10,7 +10,10 @@ class ProductDetail extends Component{
 
     constructor(props) {
         super(props);
-        this.state = {product: []};
+
+        this.state = {
+            product: []
+        }
     }
     
     componentDidMount() {
@@ -109,6 +112,19 @@ class ProductDetail extends Component{
                                     </div>
                                     </div>
                                 </div>
+                                <div className="col-md-5 lg-2">
+                                <div className="card card-body"><br/><br/>
+                                    <h1 className="text-center"> Add Your Comments ... </h1><hr/>
+                                     
+                                     </div>
+                                </div>
+
+                               <div className="col-md-6 lg-2">
+                               <div className="card card-body" style={{backgroundColor: '#FFF0F5'}}><br/><br/>
+                                     <h1 className="text-center"> Comments List  </h1><hr/>
+                                         
+                                </div>
+                                </div>   
                             </div>
                         </div>
                     </div>    

@@ -7,8 +7,13 @@ import './productDesign.css';
 function ProductList(props) {
 
     const [Products, setProducts] = useState([]);
+    const [SearchTerms, setSearchTerms] = useState("");
 
     useEffect(() => {
+        getProducts();
+    }, []);
+
+    const getProducts = () => {
         axios.post('http://localhost:5000/product/get-products')
         .then(response => {
             if (response.data.success) { 
@@ -19,7 +24,7 @@ function ProductList(props) {
             }
         })
 
-    }, []);
+    }
 
     const onDeleteProduct = (id) => {
         axios.delete('http://localhost:5000/product/delete-product/'+id)
@@ -34,6 +39,14 @@ function ProductList(props) {
         props.history.push("/edit-product/"+id);
     }
 
+    const updateSearchTerms = (newSearchTerm) => {
+
+        const variables = {
+            searchTerm: newSearchTerm //what we type in field
+        }
+        setSearchTerms(newSearchTerm)
+        getProducts(variables)
+    }
 
     const UploadedProduct = Products.map((product, index) => { 
         return <div key={product._id}>
@@ -70,6 +83,8 @@ function ProductList(props) {
                             <h1><a className="btn btn-warning col-md-12" href="/add-product"><i className="fa fa-plus"></i> Add New Product</a></h1>
                             <br/><br/>
                             <h1 className="text-center"> Store Manager Product List </h1>
+
+                            
                             {Products.length === 0 ?
                                 <div style={{ display: 'flex', height: '300px', justifyContent: 'center', alignItems: 'center' }}>
                                     <h2>No post yet...</h2>
