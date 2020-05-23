@@ -32,6 +32,9 @@ import EditProfile from './Profile/EditProfile';
 import UpdatePassword from './Profile/UpdatePassword';
 import Cart from './Cart/index';
 import cartReducers from '../reducers/cartReducers';
+import PlaceOrder from './PlaceOrder/PlaceOrderIndex';
+import Orders from './Orders/OrderIndex';
+import PrivateRoute from '../PrivateRoute';
 
 const rootReducers = combineReducers({
     auth: authReducers,
@@ -68,7 +71,11 @@ function App() {
                         <Route path="/update-password/:id" component={UpdatePassword} />
                         <Route path="/product/:productId" component={ProductDetail} />
                         <Route path="/edit-product/:id" component={EditProduct} />
-                        <Route path="/cart" component={Cart} />
+                        <PrivateRoute path="/cart" component={Cart} />
+
+                        <PrivateRoute path="/place-order" component={PlaceOrder} />
+                        
+                        <PrivateRoute path="/orders" component={Orders} />
 
                         
                         <Route path="/"  component={Shop} />

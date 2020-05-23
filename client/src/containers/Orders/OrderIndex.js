@@ -6,21 +6,34 @@ import {base_url} from "../../constants";
 import './style.css';
 
 class Orders extends Component {
-    constructor() {
-        super();
-        this.state = {
-            orderList: []
+    
+    state = {
+        ordersList: []
+        
+    }
+    
+    componentDidMount() {
+        if (!this.props.auth.isAuthenticated){
+            this.props.getToken()
+            .then(result => {
+                if(result){
+                    this.getOrders();
+                }else{
+                    this.props.history.push('/login');
+                }
+            })
+        }else{
+            this.getOrders();
         }
     }
 
-    getOrder = () => {
+    getOrders = () => {
         console.log(this.props.auth.isAuthenticated);
         const token =  this.props.auth.token;
-        const userId = this.props.auth.user.user_id;
-        fetch(`${base_url}/order/getorders/${userId}`, {
+        const user_id = this.props.auth.user.user_id;
+        fetch(`${base_url}/order/getorders/${user_id}`, {
             headers: {
-                'Content-Type': 'application/json',
-                'auth-token': token
+                'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
@@ -35,23 +48,8 @@ class Orders extends Component {
             })
     };
 
-
-    componentDidMount() {
-        if (this.props.auth.isAuthenticated){
-            this.props.getToken().then(result => {
-                if(result){
-                    this.getOrder();
-                }else{
-                    this.props.history.push('/login');
-                }
-            })
-        }else{
-            this.getOrder();
-        }
-    }
-
     getTotalOrder = (id) => {
-        const  oneOrder = this.state.orderList.find(this.order._id===id);
+        const  oneOrder = this.state.ordersList.find(this.order._id===id);
         let totalOrder = 0;
         oneOrder.order.forEach(order => {
             totalOrder = totalOrder + (order.price*order.quantity)
@@ -60,18 +58,18 @@ class Orders extends Component {
     };
 
     dateFormat = (date) => {
-        let Date = new Date(date);
-        return '${Date.getDate()}/${Date.getMonth() + 1}/${Date.getFullYear()}';
+        let d = new Date(date);
+        return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
     };
 
     render() {
         return (
             <React.Fragment>
                 <Header />
-                <div className="row mt-5">
-                    <div className="col-md-4 m-auto">
-                        <div className="card card-body">
-                            <h1 className="text-center mb-3"><i className="fas fa-user-plus"/>MY ORDER</h1>
+                
+                    <div className="Content">
+                        <div className="Card">
+                            <h1 className="text-center mb-3">MY ORDERS</h1>
                             {
                                 this.state.ordersList.map(order => {
                                     return (
@@ -121,7 +119,7 @@ class Orders extends Component {
                             }
                         </div>
                     </div>
-                </div>
+            
             </React.Fragment>
         );
     }
@@ -139,5 +137,5 @@ const mapDispatchToProps = dispatch => {
 };
 
 
-export default  connect(mapDispatchToProps, mapDispatchToProps)(Orders);
+export default  connect(mapStateToProps, mapDispatchToProps)(Orders);
 

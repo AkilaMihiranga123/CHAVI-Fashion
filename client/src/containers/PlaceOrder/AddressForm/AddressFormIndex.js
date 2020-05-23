@@ -7,10 +7,6 @@ const AddressForm = props =>  {
     const {address} = props;
 
     return (
-        <div className="row mt-5">
-            <div className="col-md-4 m-auto">
-                <div className="card card-body">
-                    <h1 className="text-center mb-3"><i className="fas fa-user-plus"/>USER ADDRESS</h1>
                     <form onSubmit={props.addressSubmitHandler}>
                         <div className="Row">
                             <div style={{width: '49%'}}>
@@ -112,9 +108,6 @@ const AddressForm = props =>  {
                         </div>
 
                     </form>
-                </div>
-            </div>
-        </div>
     );
 
 
