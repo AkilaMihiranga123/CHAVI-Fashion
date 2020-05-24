@@ -38,6 +38,7 @@ import PrivateRoute from '../PrivateRoute';
 import ThankYou from './ThankYou';
 import Wishlist from './Wishlist/index';
 import wishlistReducers from '../reducers/wishlistReducers';
+import AllOrders from './AdminDashboard/OrderManagement/AllOrders';
 
 import allproduct from '../components/ShopStore/Products/AllProducts';
 
@@ -82,6 +83,8 @@ function App() {
 
                         <PrivateRoute path="/place-order" component={PlaceOrder} />
                         <PrivateRoute path="/products/all" component={allproduct} />
+
+                        <Route path="/all-orders" component={AllOrders} />
                         
                         <PrivateRoute path="/orders" component={Orders} />
                         <PrivateRoute path="/thank-you" component={ThankYou} />
