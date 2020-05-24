@@ -39,6 +39,8 @@ import ThankYou from './ThankYou';
 import Wishlist from './Wishlist/index';
 import wishlistReducers from '../reducers/wishlistReducers';
 
+import allproduct from '../components/ShopStore/Products/AllProducts';
+
 const rootReducers = combineReducers({
     auth: authReducers,
     cart: cartReducers,
@@ -79,6 +81,7 @@ function App() {
                         <PrivateRoute path="/wishlist" component={Wishlist} />
 
                         <PrivateRoute path="/place-order" component={PlaceOrder} />
+                        <PrivateRoute path="/products/all" component={allproduct} />
                         
                         <PrivateRoute path="/orders" component={Orders} />
                         <PrivateRoute path="/thank-you" component={ThankYou} />

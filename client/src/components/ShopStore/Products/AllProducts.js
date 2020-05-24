@@ -1,15 +1,17 @@
 import React, { useState, useEffect} from 'react';
 import axios from 'axios';
-import Header from "../../components/Header/Header";
-import ProductImageSlider from "./ProductImageSlider";
-import './productDesign.css';
+import Header from '../../Header/Header';
+import ProductImageSlider from "../../../containers/ProductManagemet/ProductImageSlider";
+import '../../../containers/ProductManagemet/productDesign.css';
+import './style.css';
 
-function ProductList(props) {
+function AllProducts(props) {
 
     const [Products, setProducts] = useState([]);
 
+
     const [Skip, setSkip] = useState(0);
-    const [Limit, setLimit] = useState(6);
+    const [Limit, setLimit] = useState(9);
     const [PostSize, setPostSize] = useState();
 
     useEffect(() => {
@@ -49,22 +51,9 @@ function ProductList(props) {
         setSkip(skip)
     }
 
-    const onDeleteProduct = (id) => {
-        axios.delete('http://localhost:5000/product/delete-product/'+id)
-           .then(res =>{
-                console.log(res.data);
-                alert('Product Delete Successfully');
-           }); 
-    }
-
-    const onEditProduct = (id) => {
-        console.log(id);
-        props.history.push("/edit-product/"+id);
-    }
-
     const UploadedProduct = Products.map((product, index) => { 
         return <div key={product._id}>
-             <div className="card" style={{backgroundColor: 'pink'}}>
+             <div className="card" style={{backgroundColor: '#FFF0F5'}}>
                 {<a href={`/product/${product._id}`} >
                     <ProductImageSlider images={product.product_image} /></a>}
 
@@ -74,30 +63,19 @@ function ProductList(props) {
                     <div style={{ display: 'flex', height: '50px', justifyContent: 'center', alignItems: 'center' }}>
                         <p> {`Rs.${product.product_price}/=`}</p>
                     </div>
-                    <div className="col-lg-12">
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <button className="btn btn-outline-success btn-lg btn-block" onClick={() => {onEditProduct(product._id)}}>Edit</button>
-                        </div>
-                    </div>
-                    <div className="col-lg-12">
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <a href="/product-list" className="btn btn-outline-danger btn-lg btn-block" onClick={() => {onDeleteProduct(product._id)}}>Delete</a>
-                        </div>
-                    </div>                
+                               
                 </div> 
         </div>
     })
     
         return (
            <div>
-               <Header/>
+               <Header />
                     <div className="col-md-10 m-auto">
-                        <div className="card card-body">
-                            <h1><a className="btn btn-warning col-md-12" href="/add-product"><i className="fa fa-plus"></i> Add New Product</a></h1>
-                            <br/><br/>
-                            <h1 className="text-center"> Store Manager Product List </h1>
-
-                            
+                        <div className="card card-body"><br/>
+                        <h2 className="CategoryTitle" style={{display: 'flex', justifyContent: 'center'}}> Our Products</h2>
+                            <br/>
+        
                             {Products.length === 0 ?
                                 <div style={{ display: 'flex', height: '300px', justifyContent: 'center', alignItems: 'center' }}>
                                     <h2>No post yet...</h2>
@@ -122,5 +100,9 @@ function ProductList(props) {
         );
 }
 
-export default ProductList;
+export default AllProducts;
+
+
+
+
 
