@@ -215,7 +215,7 @@ class ProductDetail extends Component{
                                          {this.state.Comments.map(comment => (
                                              <div key={comment._id}>
                                                  <div className="card card-body"><br/>
-                                                 <h3><i class="fa fa-commenting" aria-hidden="true"></i> {comment.writer} </h3>
+                                                 <h3><i className="fa fa-commenting" aria-hidden="true"></i> {comment.writer} </h3>
                                                     <h6> Comment : {comment.comment}</h6>
                                                  </div>
                                              </div>

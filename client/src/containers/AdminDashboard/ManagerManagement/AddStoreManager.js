@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import Header from "../../../components/Header/Header";
+import Footer from '../../../components/Footer/index';
 
 export default class AddStoreManager extends Component {
 
@@ -149,7 +150,7 @@ export default class AddStoreManager extends Component {
         return (
             <div>
                 <Header/>
-                <div className="row mt-5">
+                <div className="mt-5">
                     <div className="col-md-4 m-auto">
                         <div className="card card-body">
                             <h1 className="text-center mb-3">ADD NEW STORE MANAGER</h1>
@@ -228,7 +229,8 @@ export default class AddStoreManager extends Component {
                             </form>
                         </div>
                     </div>
-                </div>
+                </div><br/><br/><br/>
+                <Footer />
             </div>
         );
     }

@@ -274,7 +274,7 @@ class PlaceOrder extends Component{
                                     {
                                         this.state.existingAddress ?
                                         <div className="DeliveryButtonContainer" >
-                                            <button onClick={this.confirmDeliveryAddress} className="btn btn-warning"><i class="fas fa-truck"></i>&nbsp; Deliver Here</button>
+                                            <button onClick={this.confirmDeliveryAddress} className="btn btn-warning"><i className="fas fa-truck"></i>&nbsp; Deliver Here</button>
                                         </div> : null
                                     }
                                     

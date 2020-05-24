@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../../../components/Header/Header';
+import Footer from '../../../components/Footer/index';
 
 const Category = props => (
     <tr>
@@ -58,7 +59,7 @@ export default class CategoryList extends Component{
         return (
             <div>
                 <Header/>
-                <div className="row mt-5">
+                <div className="mt-5">
                     <div className="col-md-10 m-auto">
                         <div className="card card-body">
                             <h1><a className="btn btn-info col-md-12" href="/add-category"><i className="fa fa-plus"></i> Add New Category</a></h1>
@@ -86,6 +87,9 @@ export default class CategoryList extends Component{
                             </div>
                         </div>
                     </div>
+                </div>
+                <div style={{marginTop: '300px'}}>
+                    <Footer/>
                 </div>
             </div>
         );

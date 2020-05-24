@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/index';
 
 class Profile extends Component {
 
@@ -81,7 +82,8 @@ class Profile extends Component {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div><br/><br/><br/>
+                <Footer />
             </div>           
         );
     }

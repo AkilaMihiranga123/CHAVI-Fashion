@@ -3,6 +3,8 @@ import * as authActions from '../../actions/authActions';
 
 import { Link, Redirect } from 'react-router-dom';
 import  { connect } from 'react-redux';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/index';
 
 class Signup extends Component {
     constructor() {
@@ -140,7 +142,9 @@ class Signup extends Component {
         }
 
         return (
-            <div className="row mt-5">
+            <div>
+            <Header />
+            <div className="mt-5">
                 <div className="col-md-4 m-auto">
                     <div className="card card-body">
                         <h1 className="text-center mb-3"><i className="fas fa-user-plus"/> REGISTER</h1>
@@ -220,7 +224,9 @@ class Signup extends Component {
                         <p className="lead mt-4">Have An Account? <Link style={{color: "DODGERBLUE"}} to="/login">Login</Link></p>
                     </div>
                 </div>
-            </div>
+            </div><br/><br/><br/>
+           <Footer />
+           </div> 
         );
     }
 }

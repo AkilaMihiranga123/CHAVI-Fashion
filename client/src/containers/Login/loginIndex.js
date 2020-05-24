@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import * as authActions from '../../actions/authActions';
 import { connect } from 'react-redux';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/index';
 
 
 class Login extends Component {
@@ -87,7 +89,9 @@ class Login extends Component {
 
     render() {
         return (
-            <div className="row mt-5">
+            <div>
+            <Header />    
+            <div className="mt-5">
                 <div className="col-md-4 m-auto">
                     <div className="card card-body">
                         <h1 className="text-center mb-3"><i className="fas fa-sign-in-alt"/> LOGIN</h1>
@@ -118,9 +122,11 @@ class Login extends Component {
                             <button type="submit" className="btn btn-primary btn-block">Login</button><br/>
                             <a href="/" className="btn btn-danger btn-block">Cancel</a>
                         </form>
-                        <p className="lead mt-4">No Account? <Link to="/signup">Register</Link></p>
+                        <p className="lead mt-4">No Account? <Link style={{color: "DODGERBLUE"}} to="/signup">Register</Link></p>
                     </div>
                 </div>
+            </div><br/><br/><br/>
+            <Footer />
             </div>
         );
     }

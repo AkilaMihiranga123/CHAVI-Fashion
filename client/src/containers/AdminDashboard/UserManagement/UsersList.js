@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Header from '../../../components/Header/Header';
+import Footer from '../../../components/Footer/index';
 
 const User = props => (
     <tr>
@@ -87,6 +88,9 @@ export default class UsersList extends Component{
                             </div>
                         </div>
                     </div>
+                </div>
+                <div style={{marginTop: '300px'}}>
+                    <Footer/>
                 </div>
             </div>
         );

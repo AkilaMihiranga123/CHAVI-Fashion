@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import Header from "../../../components/Header/Header";
+import Footer from '../../../components/Footer/index';
 
 export default class AddAdmin extends Component {
 
@@ -225,7 +226,8 @@ export default class AddAdmin extends Component {
                             </form>
                         </div>
                     </div>
-                </div>
+                </div><br/><br/><br/>
+                <Footer />
             </div>
         );
     }
