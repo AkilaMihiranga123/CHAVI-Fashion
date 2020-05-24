@@ -6,6 +6,7 @@ import BottomHeader from './BottomHeader/BottomHeader';
 import * as authActions from '../../actions/authActions';
 import { connect } from 'react-redux';
 import * as cartActions from '../../actions/cartAction';
+import * as wishlistActions from '../../actions/wishlistAction';
 
 class Header extends Component {
 
@@ -16,6 +17,7 @@ class Header extends Component {
 
                 if(result){
                     this.props.getCartItems(this.props.auth.token, this.props.auth.user.user_id)
+                    this.props.getWishlistItems(this.props.auth.token, this.props.auth.user.user_id)
                 }
 
             })
@@ -33,11 +35,13 @@ class Header extends Component {
         const {isAuthenticated} = this.props.auth;
         const {cart} = this.props;
         const cartCount = isAuthenticated ? cart.cartCount : '';
+        const {wishlist} = this.props;
+        const wishlistCount = isAuthenticated ? wishlist.wishlistCount : '';
 
         return (
             <header className="Header">
                 <TopHeader logout={this.logout} />
-                <MainHeader cartCount={cartCount} />
+                <MainHeader wishlistCount={wishlistCount} cartCount={cartCount} />
                 <BottomHeader />
             </header>
         );
@@ -48,7 +52,8 @@ class Header extends Component {
 const mapStateToProps = state => {
     return {
         auth: state.auth,
-        cart: state.cart
+        cart: state.cart,
+        wishlist: state.wishlist
     }
 }
 
@@ -57,6 +62,7 @@ const mapDispatchToProps = dispatch => {
         getToken: () => dispatch(authActions.getToken()),
         logout: () => dispatch(authActions.logout()),
         getCartItems: (token, user_id) => dispatch(cartActions.getCartItems(token, user_id)),
+        getWishlistItems: (token, user_id) => dispatch(wishlistActions.getWishlistItems(token, user_id))
     }
 }
 

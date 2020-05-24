@@ -21,6 +21,7 @@ const cartItemRoutes = require('./api/routes/cartItems');
 const orderRoutes = require('./api/routes/orders');
 
 const commentRoutes = require('./api/routes/comment');
+const wishlistItemRoutes = require('./api/routes/wishlistItems');
 
 
 //use imported routes
@@ -36,6 +37,7 @@ app.use('/uploads', express.static('uploads'));
 app.use('/email', emailRoutes);
 app.use('/cart', cartItemRoutes);
 app.use('/order', orderRoutes);
+app.use('/wishlist', wishlistItemRoutes);
 
 //Connect DB
 mongoose.connect(process.env.MongoDB_CONNECTION,{ useCreateIndex:true, useNewUrlParser: true, useUnifiedTopology: true }, () =>

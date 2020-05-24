@@ -10,7 +10,6 @@ const Admin = props => (
         <td>{props.admin.email}</td>
         <td>{props.admin.gender}</td>
         <td>{props.admin.contact_Number}</td>
-        <td>{props.admin.userRole}</td>
         <td>
             <Link to={"/edit-admin/"+props.admin._id} className="btn btn-primary">Edit</Link>
         </td>
@@ -76,7 +75,6 @@ export default class AdminsList extends Component{
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Gender</th>
                                                 <th scope="col">Contact Number</th>
-                                                <th scope="col">User Role</th>
                                                 <th colSpan="2">Actions</th>
                                             </tr>
                                             </thead>

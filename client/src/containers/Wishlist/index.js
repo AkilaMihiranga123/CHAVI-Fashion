@@ -5,6 +5,7 @@ import WishlistItem from './WishlistItem/index';
 import * as wishlistActions from '../../actions/wishlistAction';
 import * as authActions from '../../actions/authActions';
 import {connect} from 'react-redux';
+import Footer from '../../components/Footer/index';
 
 class Wishlist extends Component{
     state = {
@@ -98,8 +99,10 @@ class Wishlist extends Component{
                         
 
                     </div>
+                </div><br/><br/><br/>
+                <div style={{marginTop: '300px'}}>
+                <Footer />
                 </div>
-
             </React.Fragment>
         );
     }

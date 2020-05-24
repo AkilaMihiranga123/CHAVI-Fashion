@@ -13,7 +13,7 @@ import EditUser from './AdminDashboard/UserManagement/EditUser';
 import AdminList from './AdminDashboard/AdminManagement/AdminsList';
 import EditAdmin from './AdminDashboard/AdminManagement/EditAdmin';
 import AddAdmin from './AdminDashboard/AdminManagement/AddAdmin';
-import StoreManager from './StoreManagerDashboard';
+import StoreManager from './StoreManagerDashboard/index';
 import StoreManagerList from './AdminDashboard/ManagerManagement/StoreManagersList';
 import AddStoreManager from './AdminDashboard/ManagerManagement/AddStoreManager';
 import EditStoreManager from './AdminDashboard/ManagerManagement/EditStoreManager';
@@ -36,10 +36,13 @@ import PlaceOrder from './PlaceOrder/PlaceOrderIndex';
 import Orders from './Orders/OrderIndex';
 import PrivateRoute from '../PrivateRoute';
 import ThankYou from './ThankYou';
+import Wishlist from './Wishlist/index';
+import wishlistReducers from '../reducers/wishlistReducers';
 
 const rootReducers = combineReducers({
     auth: authReducers,
-    cart: cartReducers
+    cart: cartReducers,
+    wishlist: wishlistReducers
 });
 
 const store = createStore(rootReducers, applyMiddleware(thunk));
@@ -73,17 +76,18 @@ function App() {
                         <Route path="/product/:productId" component={ProductDetail} />
                         <Route path="/edit-product/:id" component={EditProduct} />
                         <PrivateRoute path="/cart" component={Cart} />
+                        <PrivateRoute path="/wishlist" component={Wishlist} />
 
                         <PrivateRoute path="/place-order" component={PlaceOrder} />
                         
                         <PrivateRoute path="/orders" component={Orders} />
                         <PrivateRoute path="/thank-you" component={ThankYou} />
 
-                        
+                        <Route path="/store-manager-dashboard"  component={StoreManager} />
                         <Route path="/"  component={Shop} />
 
                         
-                        <Route path="/store-manager-dashboard"  component={StoreManager} />
+                        
 
                     </Switch>
                 </div>

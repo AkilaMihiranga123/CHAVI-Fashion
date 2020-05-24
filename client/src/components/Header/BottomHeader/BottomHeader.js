@@ -24,6 +24,9 @@ class BottomHeader extends Component{
                 <li className="MenuItem"><Link to="/admins-list">Admins</Link></li>
                 <li className="MenuItem"><Link to="/store-managers-list">Store Managers</Link></li>
                 <li className="MenuItem"><Link to="/users-list">Users</Link></li>
+                <li className="MenuItem"><Link to="/all-orders">Orders</Link></li>
+                <li className="MenuItem"><Link to="/contact-us">Contact Us</Link></li>
+                <li className="MenuItem"><Link to="/about-us">About Us</Link></li>
             </ul>;
         }
         if(this.props.auth.isAuthenticated && this.props.auth.user.userRole === 'storeManager'){
@@ -31,6 +34,7 @@ class BottomHeader extends Component{
                 <li className="MenuItem"><Link to="/store-manager-dashboard"><i className="fas fa-home"></i></Link></li>
                 <li className="MenuItem"><Link to="/products/all" className="MenuItemElement">Shop&nbsp;<i className="fas fa-caret-down"></i></Link></li>
                 <li className="MenuItem"><Link to="/product-list">Products</Link></li>
+                <li className="MenuItem"><Link to="/all-orders">Orders</Link></li>
                 <li className="MenuItem"><Link to="/contact-us">Contact Us</Link></li>
                 <li className="MenuItem"><Link to="/about-us">About Us</Link></li>
             </ul>;

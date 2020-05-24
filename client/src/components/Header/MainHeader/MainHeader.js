@@ -9,6 +9,7 @@ const MainHeader = props => {
         <div className="MainHeader">
             <div></div>
             <div>
+            <Link to="/wishlist"><i className="fas fa-heart">({props.wishlistCount})</i></Link>&nbsp;&nbsp;&nbsp;&nbsp;
                 <Link to="/cart"><i className="fas fa-shopping-cart">({props.cartCount})</i></Link>
             </div>
         </div>
@@ -18,7 +19,8 @@ const MainHeader = props => {
 const mapStateToProps = state => {
     return {
         auth: state.auth,
-        cart: state.cart
+        cart: state.cart,
+        wishlist: state.wishlist
     }
 }
 const mapDispatchToProps = dispatch => {

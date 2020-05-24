@@ -75,4 +75,21 @@ router.get('/getorders/:user_id', (req, res, next) =>{
     });
 });
 
+
+router.get('/get-all-orders', (req, res, next) =>{
+    Order.find()
+        .then(orders => {
+            res.status(200).json({
+                status: 'success',
+                data: orders
+            });
+        })
+        .catch(error => {
+            res.status(400).json({
+                status: 'error',
+                error: error
+            });
+        });
+});
+
 module.exports = router;

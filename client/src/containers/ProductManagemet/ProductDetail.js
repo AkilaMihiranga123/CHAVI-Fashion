@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import * as cartActions from '../../actions/cartAction';
 import * as authActions from '../../actions/authActions';
 import Footer from '../../components/Footer/index';
+import * as wishlistActions from '../../actions/wishlistAction';
 class ProductDetail extends Component{
 
     constructor(props) {
@@ -59,6 +60,7 @@ class ProductDetail extends Component{
             .then(result => {
                 if(result){
                     this.props.getCartItems(this.props.auth.token, this.props.auth.user.user_id)
+                    this.props.getWishlistItems(this.props.auth.token, this.props.auth.user.user_id)
                     .then(response => {
                         console.log(response);
                     })
@@ -123,6 +125,33 @@ class ProductDetail extends Component{
         });
     }
 
+    addToWishlist = (productId, price, name, image) => {
+
+        if(!this.props.auth.isAuthenticated){
+            this.props.history.push('/login');
+            return;
+        }
+
+        const { auth } = this.props;
+        const wishlistItem = {
+            user: auth.user.user_id,
+            product: productId,
+            name: name,
+            image: image,
+            quantity: 1,
+            price: price
+        }
+        console.log(wishlistItem);
+        this.props.addToWishlist(auth.token, wishlistItem)
+        .then(response => {
+            //console.log(response);
+            console.log(this.props.wishlist);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+
     render() {
         
         return (
@@ -147,7 +176,7 @@ class ProductDetail extends Component{
     
                                         <div className="col-lg-12">
                                             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                                <Link to={"/path/"+this.state.product._id} className="btn btn-outline-info btn-lg btn-block">Add To Wish List</Link>
+                                            <button className="btn btn-outline-info btn-lg btn-block" onClick={() => { this.addToWishlist(this.state.product._id, this.state.product.product_price, this.state.product.product_name, this.state.product.product_image[0]) }}>ADD TO WISHLIST</button>
                                             </div><br/>
                                         </div>
                                         <div className="col-lg-12">
@@ -215,7 +244,9 @@ const mapDispatchToProps = dispatch => {
     return {
         addToCart: (token, cartItem) => dispatch(cartActions.addToCart(token, cartItem)),
         getCartItems: (token, user_id) => dispatch(cartActions.getCartItems(token, user_id)),
-        getToken: () => dispatch(authActions.getToken())
+        getToken: () => dispatch(authActions.getToken()),
+        addToWishlist: (token, wishlistItem) => dispatch(wishlistActions.addToWishlist(token, wishlistItem)),
+        getWishlistItems: (token, user_id) => dispatch(wishlistActions.getWishlistItems(token, user_id)),
     }
 }
 

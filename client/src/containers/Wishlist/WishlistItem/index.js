@@ -3,7 +3,7 @@ import './style.css';
 
 const WishlistItem = props => {
     return(
-        <div className="card card-body">
+        <div className="card card-body col-md-7 m-auto p-auto">
             <div className="SingleItem">
             <div className="ItemWrapper">
                 <div className="ItemImage" style={{width: '100px', height: '100px', overflow: 'hidden', position: 'relative'}}>

@@ -10,7 +10,6 @@ const StoreManager = props => (
         <td>{props.manager.email}</td>
         <td>{props.manager.gender}</td>
         <td>{props.manager.contact_Number}</td>
-        <td>{props.manager.userRole}</td>
         <td>
             <Link to={"/edit-store-manager/"+props.manager._id} className="btn btn-primary">Edit</Link>
         </td>
@@ -60,7 +59,7 @@ export default class StoreManagersList extends Component{
         return (
             <div>
                 <Header/>
-                <div className="row mt-5">
+                <div className="mt-5">
                     <div className="col-md-10 m-auto">
                         <div className="card card-body">
                             <h1><a className="btn btn-primary" href="/add-store-manager"><i className="fa fa-plus"></i> ADD NEW STORE MANAGER</a></h1>
@@ -76,7 +75,6 @@ export default class StoreManagersList extends Component{
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Gender</th>
                                                 <th scope="col">Contact Number</th>
-                                                <th scope="col">User Role</th>
                                                 <th colSpan="2">Actions</th>
                                             </tr>
                                             </thead>
