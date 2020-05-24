@@ -8,25 +8,45 @@ function Products(props) {
 
     const [Products, setProducts] = useState([]);
 
+    const [Skip, setSkip] = useState(0);
+    const [Limit, setLimit] = useState(6);
+    const [PostSize, setPostSize] = useState();
+
     useEffect(() => {
-        axios.post('http://localhost:5000/product/get-products')
+        const variables = {
+            skip: Skip,
+            limit: Limit,
+        }
+        getProducts(variables);
+    }, []);
+
+    const getProducts = (variables) => {
+        axios.post('http://localhost:5000/product/get-products', variables)
         .then(response => {
             if (response.data.success) { 
-                setProducts(response.data.products)
-                console.log(response.data.products)
+                if (variables.loadMore) {
+                    setProducts([...Products, ...response.data.products])
+                } else {
+                    setProducts(response.data.products)
+                }
+                setPostSize(response.data.postSize) //set the number of items
             } else {
                 alert('Somthing Wrong...');
             }
         })
 
-    }, []);
+    }
 
-    const onDeleteProduct = (id) => {
-        axios.delete('http://localhost:5000/product/delete-product/'+id)
-           .then(res =>{
-                console.log(res.data);
-                alert('Product Delete Successfully');
-           }); 
+    const onLoadMore = () => {
+        let skip = Skip + Limit;
+
+        const variables = {
+            skip: skip,
+            limit: Limit,
+            loadMore: true
+        }
+        getProducts(variables)
+        setSkip(skip)
     }
 
 
@@ -65,6 +85,13 @@ function Products(props) {
                                 </div>
                             }
                             <br /><br />
+
+                            {PostSize >= Limit && //if postsize is greater than or equal to limit then lordmore button didnt display
+                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <button className="btn btn-info"
+                                            onClick={onLoadMore}>Load More</button>
+                                </div>
+                            }
                         </div>
                     </div> 
            </div>   

@@ -37,6 +37,8 @@ import Orders from './Orders/OrderIndex';
 import PrivateRoute from '../PrivateRoute';
 import ThankYou from './ThankYou';
 
+import allproduct from '../components/ShopStore/Products/AllProducts';
+
 const rootReducers = combineReducers({
     auth: authReducers,
     cart: cartReducers
@@ -75,6 +77,7 @@ function App() {
                         <PrivateRoute path="/cart" component={Cart} />
 
                         <PrivateRoute path="/place-order" component={PlaceOrder} />
+                        <PrivateRoute path="/products/all" component={allproduct} />
                         
                         <PrivateRoute path="/orders" component={Orders} />
                         <PrivateRoute path="/thank-you" component={ThankYou} />
